@@ -48,4 +48,5 @@ def test_census_stop_rule_on_tiny_bags(tmp_path: Path):
         write_processed=False,
     )
     assert result["stop"]["B"] == "census_only"
+    assert result["stop"]["B-conditions"] == "lookup_only"
     assert result["targettrack"]["purified"] == 1

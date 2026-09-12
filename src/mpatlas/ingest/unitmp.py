@@ -1,3 +1,5 @@
+"""TOPDB / PDBTM. TOPDB bulk XML is local (unitmp download URLs 404)."""
+
 from __future__ import annotations
 
 import xml.etree.ElementTree as ET
@@ -34,7 +36,7 @@ def _try_urls(urls: list[str], dest: Path) -> Path | None:
 
 def download() -> dict[str, Path | None]:
     return {
-        "topdb": _try_urls(TOPDB_URLS, TOPDB_OUT),
+        "topdb": TOPDB_OUT if TOPDB_OUT.exists() and TOPDB_OUT.stat().st_size > 1000 else _try_urls(TOPDB_URLS, TOPDB_OUT),
         "pdbtm": _try_urls(PDBTM_URLS, PDBTM_OUT),
     }
 
@@ -53,7 +55,7 @@ def _seq_from(el: ET.Element) -> str:
 
 def load_pdbtm(path: Path | None = None) -> list[Record]:
     path = path or PDBTM_OUT
-    if not path or not path.exists():
+    if not path or not Path(path).exists():
         return []
     out: list[Record] = []
     for _, el in ET.iterparse(path, events=("end",)):
@@ -85,30 +87,57 @@ def load_pdbtm(path: Path | None = None) -> list[Record]:
     return out
 
 
+def _arch(typ: str) -> str | None:
+    t = typ.lower()
+    if "beta" in t:
+        return "beta_barrel"
+    if "bitopic" in t:
+        return "bitopic_helical"
+    if "polytopic" in t or "alpha" in t:
+        return "polytopic_helical"
+    return None
+
+
 def load_topdb(path: Path | None = None) -> list[Record]:
-    path = path or TOPDB_OUT
-    if not path or not path.exists():
+    path = Path(path) if path else TOPDB_OUT
+    if not path.exists():
         return []
     out: list[Record] = []
     for _, el in ET.iterparse(path, events=("end",)):
-        if _local(el.tag) not in {"entry", "protein", "topdb"}:
+        if _local(el.tag) != "topdb":
             continue
-        acc = el.attrib.get("id") or el.attrib.get("uniprot") or ""
+        acc = el.attrib.get("ID") or el.attrib.get("id") or ""
+        typ = el.attrib.get("type") or ""
         seq = _seq_from(el)
+        numtm = 0
+        mem = 0
+        pdb = None
+        for child in el.iter():
+            loc = _local(child.tag)
+            if loc == "numtm":
+                numtm = int(child.attrib.get("Count") or child.attrib.get("count") or 0)
+            elif loc == "pdb" and pdb is None:
+                pid = child.attrib.get("ID") or child.attrib.get("id") or ""
+                if len(pid) >= 4:
+                    pdb = pid.upper()[:4]
+            elif loc == "region":
+                place = (child.attrib.get("Loc") or child.attrib.get("loc") or "").lower()
+                if place == "membrane":
+                    mem += 1
+        n_tm = numtm or mem
         if not acc and not seq:
             el.clear()
             continue
-        n_tm = sum(1 for c in el.iter() if _local(c.tag) in {"tm", "membrane", "region"} and "tm" in (
-            (c.attrib.get("loc") or c.attrib.get("type") or "").lower()
-        ))
         out.append(
             Record(
                 source="topdb",
                 question="C",
                 sequence=seq,
-                label=None,
-                accession=acc,
+                label=1.0 if pdb else None,
+                accession=acc or None,
+                pdb_id=pdb,
                 n_tm=n_tm or None,
+                architecture=_arch(typ) or (architecture_from_n_tm(n_tm) if n_tm else None),
             )
         )
         el.clear()

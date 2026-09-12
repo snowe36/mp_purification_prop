@@ -76,6 +76,8 @@ Proteins with 1 predicted TM are kept in a separate `bitopic` slice and not mixe
 | TargetTrack TM-filtered | A (expressed), B (purified \| cloned) | mixed centers, mostly prokaryotic |
 | Daley / Hammon / Drew GFP | A transfer | E. coli or yeast, small n |
 | PurificationDB | B-conditions | human PDB, success-only, detergent NER incomplete |
+| GPCRdb constructs | B-conditions | solved GPCRs, success-only solubilization/xtal recipes |
+| Högbom 2017 / Kotov 2019 / Lin 2016 / Lantez 2015 | B-conditions | small published screens; not purify-vs-fail |
 | PDBTM / mpstruc | C | solved structures |
 | UniProt Swiss-Prot TM | C background; ranking universe | reviewed TM, all organisms |
 | TOPDB / HTP | topology features | experimental + predicted topology |

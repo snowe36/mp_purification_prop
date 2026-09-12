@@ -8,7 +8,17 @@ import pandas as pd
 
 from mpatlas.catalog import STATUS_RANK, Record
 from mpatlas.funnel import attrition
-from mpatlas.ingest import curnow, gfp, gpcrdb, mpstruc, purificationdb, screens, targettrack, uniprot, unitmp
+from mpatlas.ingest import (
+    curnow,
+    gfp,
+    gpcrdb,
+    mpstruc,
+    purificationdb,
+    screens,
+    targettrack,
+    uniprot,
+    unitmp,
+)
 from mpatlas.ingest.purificationdb import _detergent_hit
 from mpatlas.paths import PROCESSED, REPORTS, ensure_dirs
 from mpatlas.topology import predict_topology

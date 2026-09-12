@@ -13,6 +13,21 @@ from mpatlas.paths import PROCESSED, REPORTS, ensure_dirs
 from mpatlas.splits import cluster_split, group_split, hamming_clusters, random_split, split_ok
 
 
+def _stack(sequences: list[str], embeds, mode: str) -> np.ndarray:
+    if mode == "esm":
+        X = embeds.matrix(sequences)
+        if X is None:
+            raise ValueError("missing embeddings")
+        return X
+    Xc = matrix(sequences)
+    if mode != "both" or embeds is None:
+        return Xc
+    Xe = embeds.matrix(sequences)
+    if Xe is None:
+        raise ValueError("missing embeddings")
+    return np.hstack([Xc, Xe])
+
+
 def _models(seed: int = 0) -> dict:
     return {
         "logreg": Pipeline(
@@ -62,8 +77,8 @@ def evaluate_split(
     return rows
 
 
-def run_curnow(sequences: list[str], labels: np.ndarray) -> pd.DataFrame:
-    X = matrix(sequences)
+def run_curnow(sequences: list[str], labels: np.ndarray, embeds=None, mode: str = "compose") -> pd.DataFrame:
+    X = _stack(sequences, embeds, mode)
     y = labels.astype(int)
     rows = []
     tr, te = random_split(len(y), y)
@@ -73,7 +88,10 @@ def run_curnow(sequences: list[str], labels: np.ndarray) -> pd.DataFrame:
     tr, te = cluster_split(clusters)
     if split_ok(y, tr, te, min_n=20):
         rows.extend(evaluate_split(X, y, tr, te, "cluster"))
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    if not df.empty:
+        df["features"] = mode
+    return df
 
 
 def subsample_idx(y: np.ndarray, max_n: int = 4000, seed: int = 0) -> np.ndarray:
@@ -98,8 +116,10 @@ def run_binary(
     split_name: str,
     holdout: list[str] | None = None,
     min_n: int = 30,
+    embeds=None,
+    mode: str = "compose",
 ) -> pd.DataFrame:
-    X = matrix(sequences)
+    X = _stack(sequences, embeds, mode)
     y = labels.astype(int)
     rows = []
     tr, te = random_split(len(y), y)
@@ -115,7 +135,10 @@ def run_binary(
             tr, te = group_split(groups, te_g)
             if split_ok(y, tr, te, min_n=min_n):
                 rows.extend(evaluate_split(X, y, tr, te, split_name))
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    if not df.empty:
+        df["features"] = mode
+    return df
 
 
 def write_results(df: pd.DataFrame, name: str) -> None:

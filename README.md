@@ -2,7 +2,7 @@
 
 **Cellular expression is not HTS-studyable material — and sequence models of that gap mostly learn family, center, or organism.**
 
-This repo measures the membrane-protein HTS funnel on public catalogs: Curnow FACS (question A), PSI TargetTrack membrane-center production (B), PurificationDB buffers when present (B-conditions), and mpstruc vs Swiss-Prot TM (C). The three questions are never pooled. There is no public 1000-protein FSEC table; TargetTrack `purified` is the large B proxy, not a substitute for FSEC-TS.
+This repo measures the membrane-protein HTS funnel on public catalogs: Curnow FACS (question A), PSI TargetTrack membrane-center production (B), GPCRdb construct recipes plus four published detergent screens (B-conditions; PurificationDB is still missing), and mpstruc vs Swiss-Prot TM (C). The questions are never pooled. There is no public 1000-protein FSEC table; TargetTrack `purified` is the large B proxy, not a substitute for FSEC-TS. Detergent rows are a starting prior, not a purify-vs-fail label.
 
 Pre-registered contract: [`ANALYSIS.md`](ANALYSIS.md). Package: `mp-atlas` / `mpatlas`.
 
@@ -22,11 +22,11 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
 
 ## What this repo builds
 
-1. **Ingest** TargetTrack membrane-center trials, UniProt Swiss-Prot TM, mpstruc, the full Curnow library, and PurificationDB / UniTmp when the dumps resolve
+1. **Ingest** TargetTrack membrane-center trials, UniProt Swiss-Prot TM, mpstruc, the full Curnow library, GPCRdb construct Excel, Högbom/Kotov/Lin/Lantez catalogs, and PurificationDB / UniTmp when those dumps resolve
 2. **Gate 0 census** — n at every layer, stop rules for B / B-conditions / C, before any AUC
 3. **Features** — composition, Kyte–Doolittle TM belt, termini, loop charge, sequons (CPU, no embeddings)
 4. **Models** — logreg + RF on A, on B (purified | cloned), and on C vs Swiss-Prot TM, under random vs leakage splits
-5. **Playbook** — given expression, recommend `standard` / `wrap_rescue` / `redesign` / `deprioritize` (not buffer recipes)
+5. **Playbook** — given expression, recommend `standard` / `wrap_rescue` / `redesign` / `deprioritize`, then attach a DDM±CHS extract prior
 6. **WRAP amenability** — a rescue heuristic on B-failures, not a design engine
 
 <p align="center">
@@ -50,7 +50,14 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
 | Swiss-Prot TM background (C) | **80,943** |
 | mpstruc unique PDB IDs | **4,285** · 2,200 Swiss-Prot TM join positives |
 | PurificationDB / PDBTM / TOPDB / GFP cohorts | **n = 0** at ingest (dumps unreachable or not shipped) |
-| Gate 0 stop | A **fit_local** · B **fit** · B-conditions **lookup_only** · C **fit** |
+| GPCRdb construct recipes (B-conditions) | **1,289** rows · **442** solubilization · **268** unique PDBs |
+| GPCRdb solubilization detergents | DDM **155** · DM **69** · LMNG **20** · OG **11**; additive CHS **150** |
+| Mode extract combo | **DDM+CHS** on **122** PDBs |
+| Högbom 2017 FSEC screen | **60** E. coli GFP MPs × **16** detergents (family-level claims; Table 2 is a figure) |
+| Kotov 2019 nanoDSF | **9** IMPs × **94** detergents; maltose-NG stabilize transporters; fos-choline/PEG unfold |
+| Lin 2016 FA-SEC | **n = 2** (ASBTNM, HiTehA); **1%** DDM extract, **0.03%** DDM IMAC/SEC |
+| Lantez 2015 His-tag screen | **n = 31**; winners DDM, DM, DMNG, TX-100, LAPAO, Fos-12 (no public per-protein table) |
+| Gate 0 stop | A **fit_local** · B **fit** · B-conditions **prior** · C **fit** |
 | A random-split RF ROC-AUC | **0.904** |
 | A Hamming-cluster RF / logreg | **0.868** / **0.783** (cluster test n=85) |
 | B random-split RF | **0.667** |
@@ -61,7 +68,7 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
 | Same, center holdout RF | **0.514** (chance after lab switch) |
 | Next-step mix on 800 expressed-not-purified | standard **193** · WRAP rescue **197** · redesign **272** · deprioritize **138** |
 
-Artifacts: [`reports/gate0.json`](reports/gate0.json), [`reports/curnow_leakage.csv`](reports/curnow_leakage.csv), [`reports/purified_leakage.csv`](reports/purified_leakage.csv), [`reports/structure_leakage.csv`](reports/structure_leakage.csv), [`reports/playbook_panel.csv`](reports/playbook_panel.csv).
+Artifacts: [`reports/gate0.json`](reports/gate0.json), [`reports/curnow_leakage.csv`](reports/curnow_leakage.csv), [`reports/purified_leakage.csv`](reports/purified_leakage.csv), [`reports/structure_leakage.csv`](reports/structure_leakage.csv), [`reports/playbook_panel.csv`](reports/playbook_panel.csv), [`reports/gpcrdb_detergents.csv`](reports/gpcrdb_detergents.csv).
 
 ---
 
@@ -126,7 +133,7 @@ mpstruc is a curated unique-protein view of solved membrane proteins (3,738 poly
 
 ## What to try next
 
-We do not have detergent recipes (PurificationDB n=0). The useful public question is: **if it already expressed, should you keep going with a standard purify, switch to a WRAP-style fusion path, change the construct, or stop?**
+PurificationDB is still n=0. GPCRdb and the four screens supply a **starting extract**, not a yes/no purify score. The useful public question remains: **if it already expressed, should you keep going with a standard purify, switch to a WRAP-style fusion path, change the construct, or stop?** If the action is to extract, start with DDM (± CHS for 7-TM / eukaryotic).
 
 Train P(purified | expressed) on TargetTrack membrane centers. Layer WRAP amenability and a few construct levers (too long, too many sequons, no fusion-able terminus). Four tokens only: `standard`, `wrap_rescue`, `redesign`, `deprioritize`.
 
@@ -150,7 +157,21 @@ Random-split RF AUC is **0.66**. Hold out NYCOMPS and test other centers: **0.51
 
 <p align="center"><em>Figure 8. Longer proteins and a denser TM belt track failure; cysteine count vs aa C disagree (collinear). Sequon weight is not a license to add glycans — it likely rides along with center/organism.</em></p>
 
-Full panel: [`reports/playbook_panel.csv`](reports/playbook_panel.csv). Coefficients: [`reports/playbook_coefs.csv`](reports/playbook_coefs.csv).
+Full panel: [`reports/playbook_panel.csv`](reports/playbook_panel.csv). Coefficients: [`reports/playbook_coefs.csv`](reports/playbook_coefs.csv). `mpx-playbook` writes `detergent_extract` / `detergent_polish` / `detergent_rescue` / `detergent_avoid` on each row.
+
+---
+
+## Starting detergent (a prior)
+
+GPCRdb construct annotations are solved GPCRs. Högbom, Kotov, Lin, and Lantez are small published screens. None of them is a failure table. Gate 0 therefore keeps B-conditions as a **prior**, not a classifier.
+
+Consensus first line: **~1% DDM extract → ~0.03% DDM SEC**. GPCRs add **0.2% CHS**. Rescue class is LMNG / DMNG / GDN. Kotov: fos-choline and PEG keep protein soluble while unfolding it. Lantez listed Fos-12 as a solubilization winner — that is not the same claim.
+
+<p align="center">
+  <img src="reports/figures/fig_detergents.png" alt="GPCRdb solubilization detergent counts" width="640"/>
+</p>
+
+<p align="center"><em>Figure 9. Among 442 GPCRdb solubilization rows (268 PDBs), DDM is the detergent (155) and CHS the usual additive (150). DDM+CHS is the mode combo (122 PDBs). These are crystallization successes, not a random TM draw.</em></p>
 
 ---
 
@@ -162,7 +183,7 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
   <img src="reports/figures/fig_wrap.png" alt="WRAP amenability heuristic on TargetTrack B-failures" width="640"/>
 </p>
 
-<p align="center"><em>Figure 9. Ranked B-failures (expressed/cloned, not purified). Heuristic only; ranked list in `reports/wrap_b_failures.csv`.</em></p>
+<p align="center"><em>Figure 10. Ranked B-failures (expressed/cloned, not purified). Heuristic only; ranked list in `reports/wrap_b_failures.csv`.</em></p>
 
 ---
 
@@ -171,9 +192,9 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
 - **No FSEC traces.** B is TargetTrack `purified` among cloned membrane-center targets.
 - **Curnow is one scaffold.** Local A does not transfer by assertion; GFP-paper cohorts were not available as tables (n=0).
 - **UniTmp PDBTM/TOPDB XML did not download** (host 404 / DNS). C positives are mpstruc PDB IDs joined to Swiss-Prot `xref_pdb`.
-- **PurificationDB dump was unreachable.** B-conditions is census-only / lookup-only (TM slice 0). Detergent NER cannot be audited until a dump exists.
+- **PurificationDB dump was unreachable.** Buffer NER from that source is still n=0.
 - **Center split shifts the base rate** (NYCOMPS train pos-rate 0.31 vs other-center test 0.69). That shift is part of the leakage result. Playbook center-holdout AUC **0.51**.
-- **No detergent conditions.** The playbook is an experiment class, not pH/salt/DDM.
+- **Detergent rows are success-biased and small outside GPCRdb.** GPCRdb is GPCRs only (268 PDBs). Högbom is 60 non-random E. coli GFP fusions; Table 2 grades were not released as a matrix. Kotov is 9 IMPs diluted from DDM into 94 detergents (residual DDM remains). Lin is n=2. Lantez is a winner list for 31 proteins, not per-target outcomes. Fos-12 is a Lantez solubilization winner and a Kotov unfolding detergent.
 - CPU composition + Kyte–Doolittle features only. No language-model embeddings in v1.
 
 ---
@@ -182,7 +203,8 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
 
 - Parse GFP-paper supplements (Daley, Hammon, Newstead/Drew) as A-transfer tests when sequences are available
 - Ingest PDBTM/TOPDB when UniTmp bulk files resolve; recompute C without the Swiss-Prot PDB join
-- PurificationDB TM slice + detergent capture rate once a dump is public
+- PurificationDB TM slice + detergent capture rate if a dump becomes public
+- Optional: PDB ligand CCDs (LMT/BOG) as *structure* detergent, not purification detergent
 - Time split on PDB deposition year for C
 - Pfam / TM-family holdout on natural sequences
 
@@ -197,9 +219,9 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
 | Download | `mpx-download` (`--skip-targettrack` optional) | `data/raw/` (gitignored except `curnow_labelled.csv`) |
 | Census | `mpx-census` | `reports/gate0.md`, `data/processed/*.parquet` |
 | Models + figures | `mpx-express` | `reports/*_leakage.csv`, `reports/figures/` |
-| Playbook | `mpx-playbook` | `reports/playbook_panel.csv`, `fig_playbook_*.png` |
+| Playbook | `mpx-playbook` | `reports/playbook_panel.csv`, `fig_playbook_*.png`, detergent prior columns |
 
-TargetTrack is Zenodo [821654](https://zenodo.org/records/821654) (`proteinTrialSeqs.fasta.gz` inside the tarball). Swiss-Prot TM is the UniProt stream `reviewed:true AND ft_transmem:*`. mpstruc XML is from [blanco.biomol.uci.edu/mpstruc](https://blanco.biomol.uci.edu/mpstruc/listAll/mpstrucTblXml).
+TargetTrack is Zenodo [821654](https://zenodo.org/records/821654) (`proteinTrialSeqs.fasta.gz` inside the tarball). Swiss-Prot TM is the UniProt stream `reviewed:true AND ft_transmem:*`. mpstruc XML is from [blanco.biomol.uci.edu/mpstruc](https://blanco.biomol.uci.edu/mpstruc/listAll/mpstrucTblXml). GPCRdb construct Excel is [protwis/gpcrdb_data](https://github.com/protwis/gpcrdb_data) `construct_annotations.xlsx`. Screen catalogs live under `data/fixtures/`.
 
 ---
 
@@ -212,13 +234,14 @@ tests/               XML/FASTA smoke, topology, split disjointness
 demo/                offline path
 reports/             Gate 0 + committed metrics and figures
 data/raw/            catalogs (gitignored; keep curnow_labelled.csv)
+data/fixtures/       Högbom/Kotov/Lin/Lantez tables
 ```
 
 ---
 
 ## Acknowledgments
 
-TargetTrack / PSI centers; Curnow designed library; mpstruc (White lab); UniProt; PurificationDB (Garland et al. 2023) and UniTmp when those dumps are reachable.
+TargetTrack / PSI centers; Curnow designed library; mpstruc (White lab); UniProt; GPCRdb construct annotations; Lantez et al. 2015; Lin et al. 2016; Sjöstrand, Högbom et al. 2017; Kotov et al. 2019; PurificationDB (Garland et al. 2023) and UniTmp when those dumps are reachable.
 
 ---
 
