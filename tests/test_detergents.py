@@ -9,7 +9,9 @@ def test_canonicalize_ddm_aliases():
     assert canonicalize("n-dodecyl-β-D-maltoside") == "DDM"
     assert canonicalize("n-Dodecyl-b-D-maltopyranoside") == "DDM"
     assert canonicalize("LMNG") == "LMNG"
-    assert canonicalize("Triton X-100") == "TX100"
+    assert canonicalize("OG (n-octyl-β-D-glucopyranoside)") == "OG"
+    assert canonicalize("HTG(heptylthioglucoside)") == "HTG"
+    assert canonicalize("nonyl-glucoside") == "NG"
 
 
 def test_screens_hogbom_and_kotov_counts():

@@ -75,7 +75,10 @@ ALIASES = {
     "c8e4": "C8E4",
     "c10e5": "C10E5",
     "c12e8": "C12E8",
-    "htg": "HTG",
+    "nonylglucoside": "NG",
+    "nnonylglucoside": "NG",
+    "heptylthioglucoside": "HTG",
+    "hpto": "HTG",
     "digitonin": "digitonin",
     "ogng": "OGNG",
 }
@@ -122,15 +125,18 @@ def canonicalize(name: str | None) -> str | None:
     raw = str(name).strip()
     if not raw or raw.lower() in {"nan", "none", "-"}:
         return None
-    key = _token(raw)
-    if key in ALIASES:
-        return ALIASES[key]
-    # GPCRdb already stores short names.
-    if raw.upper() in FAMILY or raw in FAMILY:
-        return raw.upper() if raw.upper() in FAMILY else raw
-    if raw.upper() in ALIASES.values():
-        return raw.upper()
-    return raw
+    head = re.split(r"[/(]", raw, maxsplit=1)[0].strip()
+    first = re.split(r"[\s,;/(]+", raw)[0].strip()
+    for cand in (raw, head, first):
+        key = _token(cand)
+        if key in ALIASES:
+            return ALIASES[key]
+        up = cand.upper()
+        if up in FAMILY or up in ALIASES.values():
+            return up
+        if cand in FAMILY:
+            return cand
+    return head or raw
 
 
 def family_of(name: str | None) -> str | None:

@@ -236,6 +236,12 @@ def run_census(
     return result
 
 
+def _top(d, n: int = 8) -> dict:
+    if not isinstance(d, dict):
+        return {}
+    return dict(list(d.items())[:n])
+
+
 def _markdown(result: dict) -> str:
     lines = ["# Gate 0 census", ""]
     lines.append("| Source | n | with sequence |")
@@ -255,8 +261,9 @@ def _markdown(result: dict) -> str:
         "",
         "## B-conditions (GPCRdb + screens)",
         f"- GPCRdb rows {result.get('gpcrdb', {}).get('n_rows', 0)}, solubilization {result.get('gpcrdb', {}).get('n_solubilization', 0)}, unique PDBs {result.get('gpcrdb', {}).get('n_pdb', 0)}",
-        f"- detergent counts: {result.get('gpcrdb', {}).get('detergents', {})}",
-        f"- additive counts: {result.get('gpcrdb', {}).get('additives', {})}",
+        f"- top detergents: {_top(result.get('gpcrdb', {}).get('detergents', {}), 8)}",
+        f"- top additives: {_top(result.get('gpcrdb', {}).get('additives', {}), 4)}",
+        f"- extract combos: {_top(result.get('gpcrdb', {}).get('extract_combos', {}), 4)}",
         f"- screens: {result.get('screens', {})}",
         f"- recipe prior (not a purify classifier): **{result.get('gpcrdb', {}).get('claim_B_conditions_prior', False)}**",
         "",
