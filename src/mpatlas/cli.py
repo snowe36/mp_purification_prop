@@ -11,6 +11,7 @@ from mpatlas.ingest import curnow, download_all
 from mpatlas.ingest import uniprot as uniprot_mod
 from mpatlas.models import run_binary, run_curnow, subsample_idx, write_results
 from mpatlas.paths import FIGURES, PROCESSED, REPORTS, ensure_dirs
+from mpatlas.playbook import advise_table, fit_purify_logreg
 from mpatlas.wrap import wrap_score
 
 
@@ -137,6 +138,72 @@ def express_main() -> None:
         all_df = pd.concat(frames, ignore_index=True)
         all_df["split"] = all_df["question"] + " / " + all_df["split"]
         figmod.leakage_auc(all_df, FIGURES)
+
+
+def playbook_main() -> None:
+    ensure_dirs()
+    tt_path = PROCESSED / "targettrack.parquet"
+    if not tt_path.exists():
+        raise SystemExit("no TargetTrack catalog; run mpx-census")
+    tt = pd.read_parquet(tt_path)
+    rank = tt["status_rank"] if "status_rank" in tt.columns else pd.Series([0] * len(tt))
+    expressed = tt[(rank >= 3) & (tt["sequence"].astype(str).str.len() > 20)].copy()
+    if len(expressed) < 80:
+        raise SystemExit("not enough expressed TargetTrack rows")
+    y = (expressed["status_rank"] >= 5).astype(int).to_numpy()
+    train = _sub_frame(expressed, y, 3000)
+    ytr = (train["status_rank"] >= 5).astype(int).to_numpy()
+    centers = train.get("center", pd.Series(["unk"] * len(train))).fillna("unk").astype(str)
+    holdout = sorted({c for c in centers if c != "NYCOMPS"})
+    leak = run_binary(train["sequence"].tolist(), ytr, centers.tolist(), "center", holdout=holdout or None)
+    write_results(leak, "playbook_leakage")
+    print("P(purified|expressed)", leak.to_string(index=False) if not leak.empty else "skipped")
+
+    pipe, coefs = fit_purify_logreg(train["sequence"].tolist(), ytr)
+    coefs.to_csv(REPORTS / "playbook_coefs.csv", index=False)
+    coefs.to_csv(PROCESSED / "playbook_coefs.csv", index=False)
+    figmod.playbook_coefs(coefs, FIGURES)
+
+    fail = expressed[expressed["status_rank"] < 5]
+    if len(fail) > 800:
+        fail = fail.sample(n=800, random_state=0)
+    swiss_path = PROCESSED / "uniprot.parquet"
+    swiss_n = 0
+    frames = [
+        advise_table(
+            pipe,
+            fail["sequence"].tolist(),
+            fail.get("accession", pd.Series([f"t{i}" for i in range(len(fail))])).astype(str).tolist(),
+            source="tt_expressed_not_purified",
+        )
+    ]
+    if swiss_path.exists():
+        swiss = pd.read_parquet(swiss_path).dropna(subset=["sequence"])
+        swiss = swiss[swiss["sequence"].astype(str).str.len().between(60, 900)]
+        if len(swiss) > 600:
+            swiss = swiss.sample(n=600, random_state=0)
+        swiss_n = len(swiss)
+        frames.append(
+            advise_table(
+                pipe,
+                swiss["sequence"].tolist(),
+                swiss.get("accession", pd.Series([f"u{i}" for i in range(len(swiss))])).astype(str).tolist(),
+                source="swiss_tm_sample",
+            )
+        )
+    panel = pd.concat(frames, ignore_index=True)
+    panel.to_csv(REPORTS / "playbook_panel.csv", index=False)
+    panel.to_csv(PROCESSED / "playbook_panel.csv", index=False)
+    figmod.playbook_actions(panel, FIGURES)
+    figmod.playbook_scatter(panel[panel["source"] == "tt_expressed_not_purified"], FIGURES)
+
+    print(panel.groupby(["source", "action"]).size().to_string())
+    print("top wrap_rescue (B-failures)")
+    wrap = panel[(panel["source"] == "tt_expressed_not_purified") & (panel["action"] == "wrap_rescue")]
+    wrap = wrap.sort_values("wrap_score", ascending=False).head(8)
+    for _, row in wrap.iterrows():
+        print(f"  {row.wrap_score:.2f}  p={row.p_purify:.2f}  {row.accession}  {row.why[:80]}")
+    print(f"scored {len(fail)} B-failures" + (f" + {swiss_n} Swiss-Prot TM" if swiss_n else ""))
 
 
 def panel_main() -> None:

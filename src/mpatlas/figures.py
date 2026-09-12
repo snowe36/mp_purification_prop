@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from mpatlas.palette import FACE, GRID, MUTED, NEG, POS, SERIES, TEXT
+from mpatlas.palette import FACE, GRID, MUTED, NEG, PALETTE, POS, SERIES, TEXT
 from mpatlas.paths import FIGURES, ensure_dirs
 from mpatlas.wrap import wrap_score
 
@@ -106,3 +106,69 @@ def architecture_map(df: pd.DataFrame, dest: Path | None = None) -> Path:
     ax.tick_params(axis="x", rotation=20)
     ax.set_title("Solved membrane proteins are not a random TM draw")
     return _save(fig, "fig_architecture.png", dest)
+
+
+ACTION_COLORS = {
+    "standard": PALETTE["sage"],
+    "wrap_rescue": PALETTE["lavender"],
+    "redesign": PALETTE["mustard"],
+    "deprioritize": PALETTE["coral"],
+}
+
+
+def playbook_coefs(df: pd.DataFrame, dest: Path | None = None, n: int = 12) -> Path:
+    sub = df.head(n).iloc[::-1]
+    fig, ax = plt.subplots(figsize=(6.8, 4.6))
+    colors = [POS if v else NEG for v in sub["helps_purify"]]
+    ax.barh(sub["plain"], sub["coef"], color=colors, edgecolor=TEXT, linewidth=0.4)
+    ax.axvline(0, color=GRID, lw=1)
+    ax.set_xlabel("logreg weight (standardized)")
+    ax.set_title("Sage tracks purified; coral tracks expressed-but-not-purified")
+    return _save(fig, "fig_playbook_coefs.png", dest)
+
+
+def playbook_actions(df: pd.DataFrame, dest: Path | None = None) -> Path:
+    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    order = [a for a in ("standard", "wrap_rescue", "redesign", "deprioritize") if a in set(df["action"])]
+    if "source" in df.columns and df["source"].nunique() > 1:
+        counts = df.groupby(["source", "action"]).size().unstack(fill_value=0)
+        counts = counts.reindex(columns=order, fill_value=0)
+        bottom = np.zeros(len(counts))
+        x = np.arange(len(counts))
+        for action in order:
+            vals = counts[action].to_numpy()
+            ax.bar(x, vals, bottom=bottom, color=ACTION_COLORS[action], edgecolor=TEXT, linewidth=0.4, label=action)
+            bottom = bottom + vals
+        ax.set_xticks(x)
+        ax.set_xticklabels(counts.index.astype(str))
+        ax.legend(frameon=False, fontsize=8)
+    else:
+        counts = df["action"].value_counts().reindex(order)
+        ax.bar(counts.index.astype(str), counts.values, color=[ACTION_COLORS[a] for a in counts.index], edgecolor=TEXT, linewidth=0.4)
+        ax.tick_params(axis="x", rotation=15)
+    ax.set_ylabel("proteins")
+    ax.set_title("Recommended next step — not a purification guarantee")
+    return _save(fig, "fig_playbook_actions.png", dest)
+
+
+def playbook_scatter(df: pd.DataFrame, dest: Path | None = None) -> Path:
+    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    for action, sub in df.groupby("action"):
+        ax.scatter(
+            sub["p_purify"],
+            sub["wrap_score"],
+            s=18,
+            alpha=0.7,
+            color=ACTION_COLORS.get(str(action), SERIES[0]),
+            edgecolors=TEXT,
+            linewidths=0.2,
+            label=str(action),
+        )
+    ax.axvline(0.55, color=GRID, lw=1)
+    ax.set_xlabel("P(purified | expressed)")
+    ax.set_ylabel("WRAP amenability")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.legend(frameon=False, fontsize=8)
+    ax.set_title("High purify score → standard path; else WRAP or redesign")
+    return _save(fig, "fig_playbook_scatter.png", dest)

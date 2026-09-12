@@ -53,5 +53,5 @@ def wrap_score(seq: str, topo: Topology | None = None, feat: FeatureRow | None =
         score -= 0.1
         reasons.append(f"glycosylation sequons={feat.n_sequons}")
 
-    amenable = score >= 0.5 and feat.n_tm >= 1 and fusible
+    amenable = score >= 0.5 and feat.n_tm >= 1 and fusible and 80 <= feat.length <= 900
     return WrapScore(float(max(0.0, min(1.0, score))), tuple(reasons), amenable)

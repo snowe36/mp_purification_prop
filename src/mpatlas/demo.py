@@ -8,10 +8,18 @@ import numpy as np
 
 from mpatlas.catalog import Record
 from mpatlas.census import run_census
-from mpatlas.figures import funnel, leakage_auc, wrap_panel
+from mpatlas.figures import (
+    funnel,
+    leakage_auc,
+    playbook_actions,
+    playbook_coefs,
+    playbook_scatter,
+    wrap_panel,
+)
 from mpatlas.ingest.curnow import LABELLED, load_labelled
 from mpatlas.models import run_curnow
 from mpatlas.paths import DEMO_OUT, FIXTURES, ensure_dirs
+from mpatlas.playbook import advise_table, fit_purify_logreg
 
 
 def _synthetic_library(n: int = 240, seed: int = 0) -> list[Record]:
@@ -101,12 +109,27 @@ def main() -> None:
     census = run_census(bags, reports_dir=DEMO_OUT, processed_dir=DEMO_OUT, write_processed=False)
     (DEMO_OUT / "gate0.json").write_text(json.dumps(census, indent=2, default=str))
 
+    synth = _synthetic_library()
+    sy = np.array([int(r.label or 0) for r in synth])
+    pipe, coefs = fit_purify_logreg([r.sequence for r in synth], sy)
+    panel = advise_table(
+        pipe,
+        [r.sequence for r in synth],
+        [r.accession or f"s{i}" for i, r in enumerate(synth)],
+        source="fixture",
+    )
+    coefs.to_csv(DEMO_OUT / "playbook_coefs.csv", index=False)
+    panel.to_csv(DEMO_OUT / "playbook_panel.csv", index=False)
+    playbook_coefs(coefs, DEMO_OUT)
+    playbook_actions(panel, DEMO_OUT)
+    playbook_scatter(panel, DEMO_OUT)
+
     meta = {
         "source": source,
         "n": len(rows),
         "pos": int(y.sum()),
         "leakage": df.to_dict(orient="records"),
-        "note": "Fixture funnel counts are schematic unless source is curnow.",
+        "note": "Fixture funnel counts are schematic unless source is curnow. Playbook fixture uses synthetic family labels, not TargetTrack.",
     }
     (DEMO_OUT / "meta.json").write_text(json.dumps(meta, indent=2))
     print(f"demo source={source} n={len(rows)} wrote {DEMO_OUT}")
