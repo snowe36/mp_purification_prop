@@ -26,7 +26,8 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
 2. **Gate 0 census** — n at every layer, stop rules for B / B-conditions / C, before any AUC
 3. **Features** — composition, Kyte–Doolittle TM belt, termini, loop charge, sequons (CPU, no embeddings)
 4. **Models** — logreg + RF on A, on B (purified | cloned), and on C vs Swiss-Prot TM, under random vs leakage splits
-5. **WRAP amenability** — a rescue heuristic on B-failures, not a design engine
+5. **Playbook** — given expression, recommend `standard` / `wrap_rescue` / `redesign` / `deprioritize` (not buffer recipes)
+6. **WRAP amenability** — a rescue heuristic on B-failures, not a design engine
 
 <p align="center">
   <img src="reports/figures/fig_leakage_auc.png" alt="ROC-AUC for questions A, B, and C under random vs leakage splits" width="720"/>
@@ -56,8 +57,11 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
 | B center-holdout RF (train NYCOMPS, test other centers) | **0.596** |
 | C random-split RF | **0.716** |
 | C organism-holdout RF (eukaryote test) | **0.552** |
+| Playbook P(purified \| expressed) random RF | **0.658** |
+| Same, center holdout RF | **0.514** (chance after lab switch) |
+| Next-step mix on 800 expressed-not-purified | standard **193** · WRAP rescue **197** · redesign **272** · deprioritize **138** |
 
-Artifacts: [`reports/gate0.json`](reports/gate0.json), [`reports/curnow_leakage.csv`](reports/curnow_leakage.csv), [`reports/purified_leakage.csv`](reports/purified_leakage.csv), [`reports/structure_leakage.csv`](reports/structure_leakage.csv).
+Artifacts: [`reports/gate0.json`](reports/gate0.json), [`reports/curnow_leakage.csv`](reports/curnow_leakage.csv), [`reports/purified_leakage.csv`](reports/purified_leakage.csv), [`reports/structure_leakage.csv`](reports/structure_leakage.csv), [`reports/playbook_panel.csv`](reports/playbook_panel.csv).
 
 ---
 
@@ -75,7 +79,7 @@ mpx-demo
 Full catalogs (TargetTrack tarball, UniProt stream, mpstruc XML):
 
 ```text
-mpx-download → mpx-census → mpx-express → mpx-panel
+mpx-download → mpx-census → mpx-express → mpx-playbook
 ```
 
 ---
@@ -120,6 +124,36 @@ mpstruc is a curated unique-protein view of solved membrane proteins (3,738 poly
 
 ---
 
+## What to try next
+
+We do not have detergent recipes (PurificationDB n=0). The useful public question is: **if it already expressed, should you keep going with a standard purify, switch to a WRAP-style fusion path, change the construct, or stop?**
+
+Train P(purified | expressed) on TargetTrack membrane centers. Layer WRAP amenability and a few construct levers (too long, too many sequons, no fusion-able terminus). Four tokens only: `standard`, `wrap_rescue`, `redesign`, `deprioritize`.
+
+Random-split RF AUC is **0.66**. Hold out NYCOMPS and test other centers: **0.51**. The sequence prior is weak once the lab changes. Treat the ranked list as a triage order, not a protocol.
+
+<p align="center">
+  <img src="reports/figures/fig_playbook_actions.png" alt="Recommended next step counts for TargetTrack B-failures and a Swiss-Prot TM sample" width="720"/>
+</p>
+
+<p align="center"><em>Figure 6. Of 800 proteins that expressed but did not purify, about a quarter look like a standard retry, a quarter look WRAP-amenable, a third have an obvious construct lever, and the rest are deprioritized.</em></p>
+
+<p align="center">
+  <img src="reports/figures/fig_playbook_scatter.png" alt="P(purified given expressed) versus WRAP amenability" width="640"/>
+</p>
+
+<p align="center"><em>Figure 7. Right of the line: try the usual purify. Left and high on WRAP: fusion/solubilizer path. Left and low: redesign or skip.</em></p>
+
+<p align="center">
+  <img src="reports/figures/fig_playbook_coefs.png" alt="Logistic regression weights for purification given expression" width="640"/>
+</p>
+
+<p align="center"><em>Figure 8. Longer proteins and a denser TM belt track failure; cysteine count vs aa C disagree (collinear). Sequon weight is not a license to add glycans — it likely rides along with center/organism.</em></p>
+
+Full panel: [`reports/playbook_panel.csv`](reports/playbook_panel.csv). Coefficients: [`reports/playbook_coefs.csv`](reports/playbook_coefs.csv).
+
+---
+
 ## WRAP rescue (not a claim)
 
 Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v1 scores **amenability** from predicted TM belt, length, and fusion-able termini. Vocabulary: `wrap_amenable` is allowed; designed WRAP and detergent-free structure are not.
@@ -128,7 +162,7 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
   <img src="reports/figures/fig_wrap.png" alt="WRAP amenability heuristic on TargetTrack B-failures" width="640"/>
 </p>
 
-<p align="center"><em>Figure 5. Ranked B-failures (expressed/cloned, not purified). Heuristic only; ranked list in `reports/wrap_b_failures.csv`.</em></p>
+<p align="center"><em>Figure 9. Ranked B-failures (expressed/cloned, not purified). Heuristic only; ranked list in `reports/wrap_b_failures.csv`.</em></p>
 
 ---
 
@@ -138,8 +172,8 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
 - **Curnow is one scaffold.** Local A does not transfer by assertion; GFP-paper cohorts were not available as tables (n=0).
 - **UniTmp PDBTM/TOPDB XML did not download** (host 404 / DNS). C positives are mpstruc PDB IDs joined to Swiss-Prot `xref_pdb`.
 - **PurificationDB dump was unreachable.** B-conditions is census-only / lookup-only (TM slice 0). Detergent NER cannot be audited until a dump exists.
-- **Center split shifts the base rate** (NYCOMPS train pos-rate 0.31 vs other-center test 0.69). That shift is part of the leakage result.
-- **Cluster test n=85** for Curnow. Treat the 0.78 logreg drop as directional, not a precise delta.
+- **Center split shifts the base rate** (NYCOMPS train pos-rate 0.31 vs other-center test 0.69). That shift is part of the leakage result. Playbook center-holdout AUC **0.51**.
+- **No detergent conditions.** The playbook is an experiment class, not pH/salt/DDM.
 - CPU composition + Kyte–Doolittle features only. No language-model embeddings in v1.
 
 ---
@@ -163,7 +197,7 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
 | Download | `mpx-download` (`--skip-targettrack` optional) | `data/raw/` (gitignored except `curnow_labelled.csv`) |
 | Census | `mpx-census` | `reports/gate0.md`, `data/processed/*.parquet` |
 | Models + figures | `mpx-express` | `reports/*_leakage.csv`, `reports/figures/` |
-| WRAP panel | `mpx-panel` | ranked heuristic printout |
+| Playbook | `mpx-playbook` | `reports/playbook_panel.csv`, `fig_playbook_*.png` |
 
 TargetTrack is Zenodo [821654](https://zenodo.org/records/821654) (`proteinTrialSeqs.fasta.gz` inside the tarball). Swiss-Prot TM is the UniProt stream `reviewed:true AND ft_transmem:*`. mpstruc XML is from [blanco.biomol.uci.edu/mpstruc](https://blanco.biomol.uci.edu/mpstruc/listAll/mpstrucTblXml).
 
@@ -173,7 +207,7 @@ TargetTrack is Zenodo [821654](https://zenodo.org/records/821654) (`proteinTrial
 
 ```
 ANALYSIS.md          pre-registered questions, splits, stop rule
-src/mpatlas/         ingest, topology, features, splits, models, WRAP, figures
+src/mpatlas/         ingest, topology, features, splits, models, playbook, WRAP, figures
 tests/               XML/FASTA smoke, topology, split disjointness
 demo/                offline path
 reports/             Gate 0 + committed metrics and figures

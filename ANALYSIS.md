@@ -147,9 +147,11 @@ Before fitting:
 - A drop from random-split AUC to center/family/organism AUC is evidence of leakage, not of a worse model.
 - P(purified | cloned) on TargetTrack TM is “this center’s pipeline recovered protein,” not “FSEC-monodisperse” and not “functionally folded.”
 - C vs Swiss-Prot TM is “resembles proteins that have been solved,” not “will express in my host.”
+- The playbook (B-action) recommends a next experiment class: `standard` vs `wrap_rescue` vs `redesign` vs `deprioritize`. It is not a buffer recipe and not a guarantee of purified protein.
 
 ---
 
 ## Amendments
 
 - 2026-09-11 Gate 0: UniTmp PDBTM/TOPDB bulk XML and PurificationDB dumps were unreachable at ingest time. Question C uses mpstruc (4,285 unique PDB IDs) joined to Swiss-Prot TM. B-conditions stays lookup-only (n=0). GFP-paper supplements were not present as machine-readable tables.
+- 2026-09-11 B-action playbook: `mpx-playbook` trains P(purified | expressed) on TargetTrack membrane centers and layers WRAP amenability plus construct levers. Allowed outputs are the four action tokens above. Forbidden: claiming detergent conditions, designed WRAPs, or FSEC success.
