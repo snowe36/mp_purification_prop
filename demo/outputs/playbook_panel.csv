@@ -1,0 +1,241 @@
+accession,source,action,p_purify,wrap_score,wrap_amenable,levers,why
+fix0,fixture,standard,0.899,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix1,fixture,standard,0.9975,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix2,fixture,wrap_rescue,0.0776,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix3,fixture,standard,0.7987,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix4,fixture,standard,0.9982,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix5,fixture,redesign,0.0334,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix6,fixture,standard,0.848,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix7,fixture,standard,0.9905,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix8,fixture,wrap_rescue,0.0751,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix9,fixture,standard,0.7274,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix10,fixture,standard,0.9798,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix11,fixture,wrap_rescue,0.0768,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix12,fixture,standard,0.6744,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix13,fixture,standard,0.9996,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix14,fixture,wrap_rescue,0.0197,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix15,fixture,redesign,0.5162,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix16,fixture,standard,0.9984,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix17,fixture,wrap_rescue,0.0663,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix18,fixture,standard,0.7956,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix19,fixture,standard,0.9961,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix20,fixture,redesign,0.0497,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix21,fixture,standard,0.6004,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix22,fixture,standard,0.9819,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix23,fixture,wrap_rescue,0.1187,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix24,fixture,standard,0.8492,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix25,fixture,standard,0.9919,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix26,fixture,redesign,0.1553,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix27,fixture,standard,0.7711,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix28,fixture,standard,0.9977,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix29,fixture,wrap_rescue,0.1145,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix30,fixture,standard,0.8993,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix31,fixture,standard,0.9974,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix32,fixture,wrap_rescue,0.1003,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix33,fixture,standard,0.7801,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix34,fixture,standard,0.9996,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix35,fixture,wrap_rescue,0.2501,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix36,fixture,standard,0.8444,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix37,fixture,standard,0.9922,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix38,fixture,wrap_rescue,0.0327,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix39,fixture,standard,0.7776,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix40,fixture,standard,0.9998,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix41,fixture,wrap_rescue,0.066,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix42,fixture,standard,0.8696,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix43,fixture,standard,0.9973,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix44,fixture,wrap_rescue,0.0185,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix45,fixture,standard,0.8713,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix46,fixture,standard,0.973,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix47,fixture,wrap_rescue,0.0108,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix48,fixture,standard,0.7272,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix49,fixture,standard,0.9973,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix50,fixture,wrap_rescue,0.1023,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix51,fixture,standard,0.8764,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix52,fixture,standard,0.9913,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix53,fixture,wrap_rescue,0.0151,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix54,fixture,redesign,0.5066,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix55,fixture,standard,0.997,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix56,fixture,wrap_rescue,0.0837,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix57,fixture,standard,0.7282,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix58,fixture,standard,0.9981,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix59,fixture,wrap_rescue,0.029,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix60,fixture,standard,0.5576,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix61,fixture,standard,0.9948,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix62,fixture,wrap_rescue,0.1286,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix63,fixture,standard,0.9517,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix64,fixture,standard,0.9995,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix65,fixture,redesign,0.0037,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix66,fixture,standard,0.7254,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix67,fixture,standard,0.9943,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix68,fixture,redesign,0.1367,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix69,fixture,standard,0.9606,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix70,fixture,standard,0.9984,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix71,fixture,redesign,0.0064,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix72,fixture,standard,0.8844,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix73,fixture,standard,0.9901,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix74,fixture,redesign,0.0408,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix75,fixture,standard,0.6719,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix76,fixture,standard,0.9999,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix77,fixture,redesign,0.0063,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix78,fixture,standard,0.6121,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix79,fixture,standard,0.9992,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix80,fixture,wrap_rescue,0.084,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix81,fixture,standard,0.8717,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix82,fixture,standard,0.9929,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix83,fixture,redesign,0.0496,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix84,fixture,standard,0.7779,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix85,fixture,standard,0.9999,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix86,fixture,wrap_rescue,0.0621,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix87,fixture,standard,0.955,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix88,fixture,standard,0.9998,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix89,fixture,wrap_rescue,0.0479,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix90,fixture,standard,0.8513,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix91,fixture,standard,0.9971,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix92,fixture,wrap_rescue,0.0658,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix93,fixture,standard,0.8194,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix94,fixture,standard,0.9919,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix95,fixture,wrap_rescue,0.0179,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix96,fixture,standard,0.9134,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix97,fixture,standard,0.9977,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix98,fixture,wrap_rescue,0.0105,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix99,fixture,standard,0.7228,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix100,fixture,standard,0.9833,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix101,fixture,redesign,0.0292,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix102,fixture,standard,0.8945,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix103,fixture,standard,0.9998,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix104,fixture,redesign,0.2032,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix105,fixture,standard,0.8743,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix106,fixture,standard,0.9927,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix107,fixture,redesign,0.179,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix108,fixture,standard,0.7253,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix109,fixture,standard,0.9999,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix110,fixture,wrap_rescue,0.1558,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix111,fixture,standard,0.7788,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix112,fixture,standard,0.9932,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix113,fixture,wrap_rescue,0.0435,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix114,fixture,standard,0.8343,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix115,fixture,standard,0.9838,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix116,fixture,redesign,0.0408,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix117,fixture,standard,0.8002,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix118,fixture,standard,0.9955,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix119,fixture,wrap_rescue,0.0203,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix120,fixture,standard,0.9207,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix121,fixture,standard,0.984,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix122,fixture,wrap_rescue,0.0871,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix123,fixture,standard,0.8515,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix124,fixture,standard,0.9999,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix125,fixture,wrap_rescue,0.0941,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix126,fixture,standard,0.8986,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix127,fixture,standard,0.9978,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix128,fixture,redesign,0.1471,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix129,fixture,standard,0.943,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix130,fixture,standard,0.9988,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix131,fixture,wrap_rescue,0.1113,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix132,fixture,standard,0.7084,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix133,fixture,standard,0.9902,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix134,fixture,wrap_rescue,0.0162,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix135,fixture,standard,0.7961,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix136,fixture,standard,0.9996,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix137,fixture,redesign,0.0533,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix138,fixture,standard,0.6573,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix139,fixture,standard,0.9802,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix140,fixture,redesign,0.0256,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix141,fixture,standard,0.8716,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix142,fixture,standard,0.9971,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix143,fixture,wrap_rescue,0.1077,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix144,fixture,standard,0.766,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix145,fixture,standard,0.9967,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix146,fixture,redesign,0.0695,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix147,fixture,standard,0.8825,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix148,fixture,standard,0.9969,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix149,fixture,redesign,0.0913,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix150,fixture,standard,0.7559,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix151,fixture,standard,0.9995,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix152,fixture,wrap_rescue,0.0236,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix153,fixture,standard,0.7871,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix154,fixture,standard,0.9995,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix155,fixture,redesign,0.1354,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix156,fixture,standard,0.8745,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix157,fixture,standard,0.9948,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix158,fixture,wrap_rescue,0.0623,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix159,fixture,standard,0.8535,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix160,fixture,standard,0.999,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix161,fixture,redesign,0.053,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix162,fixture,standard,0.9057,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix163,fixture,standard,0.9982,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix164,fixture,redesign,0.04,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix165,fixture,standard,0.6761,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix166,fixture,standard,0.9999,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix167,fixture,wrap_rescue,0.0606,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix168,fixture,standard,0.8425,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix169,fixture,standard,0.9999,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix170,fixture,wrap_rescue,0.0212,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix171,fixture,standard,0.754,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix172,fixture,standard,0.9941,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix173,fixture,wrap_rescue,0.3439,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix174,fixture,standard,0.7049,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix175,fixture,standard,0.991,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix176,fixture,redesign,0.0602,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix177,fixture,standard,0.6831,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix178,fixture,standard,0.9687,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix179,fixture,wrap_rescue,0.1137,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix180,fixture,standard,0.6352,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix181,fixture,standard,0.998,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix182,fixture,redesign,0.0276,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix183,fixture,standard,0.907,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix184,fixture,standard,0.9962,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix185,fixture,wrap_rescue,0.2635,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix186,fixture,standard,0.6887,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix187,fixture,standard,0.9956,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix188,fixture,wrap_rescue,0.0151,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix189,fixture,standard,0.9046,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix190,fixture,standard,0.9848,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix191,fixture,redesign,0.0433,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix192,fixture,standard,0.7006,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix193,fixture,standard,0.992,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix194,fixture,redesign,0.0251,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix195,fixture,standard,0.7397,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix196,fixture,standard,0.9952,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix197,fixture,redesign,0.0431,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix198,fixture,standard,0.8244,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix199,fixture,standard,0.9999,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix200,fixture,wrap_rescue,0.0835,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix201,fixture,standard,0.8651,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix202,fixture,standard,1.0,0.35,0,,sequence resembles TargetTrack purified (given expression)
+fix203,fixture,redesign,0.1062,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix204,fixture,standard,0.778,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix205,fixture,standard,0.9912,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix206,fixture,wrap_rescue,0.1076,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix207,fixture,standard,0.7094,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix208,fixture,standard,0.9964,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix209,fixture,wrap_rescue,0.0126,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix210,fixture,standard,0.7387,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix211,fixture,standard,0.992,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix212,fixture,wrap_rescue,0.0712,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix213,fixture,standard,0.7735,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix214,fixture,standard,0.9869,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix215,fixture,wrap_rescue,0.0228,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix216,fixture,standard,0.6146,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix217,fixture,standard,0.9697,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix218,fixture,wrap_rescue,0.1676,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix219,fixture,standard,0.6479,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix220,fixture,standard,0.9962,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix221,fixture,wrap_rescue,0.0723,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix222,fixture,standard,0.6482,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix223,fixture,standard,0.9976,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix224,fixture,wrap_rescue,0.0172,0.95,1,,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix225,fixture,standard,0.9849,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix226,fixture,standard,0.9973,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix227,fixture,wrap_rescue,0.1286,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix228,fixture,standard,0.6525,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix229,fixture,standard,0.9953,0.95,1,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix230,fixture,wrap_rescue,0.0565,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix231,fixture,standard,0.6021,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix232,fixture,standard,0.9969,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix233,fixture,wrap_rescue,0.0686,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable
+fix234,fixture,standard,0.7789,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix235,fixture,standard,0.9979,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix236,fixture,redesign,0.0297,0.8,0,add a fusion-able N- or C-terminus,add a fusion-able N- or C-terminus
+fix237,fixture,standard,0.7253,0.8,0,add a fusion-able N- or C-terminus,sequence resembles TargetTrack purified (given expression)
+fix238,fixture,standard,0.9785,0.95,1,,sequence resembles TargetTrack purified (given expression)
+fix239,fixture,wrap_rescue,0.0836,0.95,1,add a fusion-able N- or C-terminus,standard purify looks unlikely; termini/TM belt look WRAP-amenable

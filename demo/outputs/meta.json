@@ -44,5 +44,5 @@
       "pr_auc": 0.8190962680814782
     }
   ],
-  "note": "Fixture funnel counts are schematic unless source is curnow."
+  "note": "Fixture funnel counts are schematic unless source is curnow. Playbook fixture uses synthetic family labels, not TargetTrack."
 }

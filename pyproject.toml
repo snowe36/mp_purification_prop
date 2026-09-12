@@ -29,6 +29,7 @@ mpx-download = "mpatlas.cli:download_main"
 mpx-census = "mpatlas.cli:census_main"
 mpx-express = "mpatlas.cli:express_main"
 mpx-panel = "mpatlas.cli:panel_main"
+mpx-playbook = "mpatlas.cli:playbook_main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
