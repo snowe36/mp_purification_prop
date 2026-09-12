@@ -45,6 +45,7 @@ def express_main() -> None:
     write_results(df, "curnow_leakage")
     if not df.empty:
         figmod.leakage_auc(df, FIGURES)
+        (FIGURES / "fig_curnow_auc.png").write_bytes((FIGURES / "fig_leakage_auc.png").read_bytes())
     print("A", df.to_string(index=False) if not df.empty else "no splits passed the sample floor")
 
     gate_path = REPORTS / "gate0.json"
@@ -79,28 +80,30 @@ def express_main() -> None:
                 }
                 if funnel_counts:
                     figmod.funnel(funnel_counts, FIGURES)
-                fail = cloned[cloned["status_rank"] < 5].head(40)
-                if not fail.empty:
+                fail = cloned[cloned["status_rank"] < 5].copy()
+                scored = sorted(
+                    (
+                        (wrap_score(seq), acc, seq)
+                        for seq, acc in zip(
+                            fail["sequence"],
+                            fail.get("accession", pd.Series([""] * len(fail))),
+                            strict=False,
+                        )
+                    ),
+                    key=lambda t: -t[0].score,
+                )
+                top = scored[:12]
+                if top:
                     figmod.wrap_panel(
-                        fail["sequence"].tolist(),
-                        fail.get("accession", pd.Series(range(len(fail)))).astype(str).str[:16].tolist(),
+                        [seq for _, _, seq in top],
+                        [str(acc)[:16] for _, acc, seq in top],
                         FIGURES,
                     )
-                    ranked = sorted(
-                        (
-                            (wrap_score(seq), acc)
-                            for seq, acc in zip(
-                                fail["sequence"],
-                                fail.get("accession", pd.Series([""] * len(fail))),
-                                strict=False,
-                            )
-                        ),
-                        key=lambda t: -t[0].score,
-                    )
-                    lines = ["score,amenable,accession,reasons"]
-                    for sc, acc in ranked:
-                        lines.append(f"{sc.score:.3f},{int(sc.amenable)},{acc},{'|'.join(sc.reasons)}")
-                    (PROCESSED / "wrap_b_failures.csv").write_text("\n".join(lines) + "\n")
+                lines = ["score,amenable,accession,reasons"]
+                for sc, acc, _seq in scored[:40]:
+                    lines.append(f"{sc.score:.3f},{int(sc.amenable)},{acc},{'|'.join(sc.reasons)}")
+                (PROCESSED / "wrap_b_failures.csv").write_text("\n".join(lines) + "\n")
+                (REPORTS / "wrap_b_failures.csv").write_text("\n".join(lines) + "\n")
 
     swiss_path = PROCESSED / "uniprot.parquet"
     if swiss_path.exists() and gate.get("structure", {}).get("claim_C_model"):
@@ -122,6 +125,18 @@ def express_main() -> None:
         mp = pd.read_parquet(mp_path)
         if "architecture" in mp.columns:
             figmod.architecture_map(mp, FIGURES)
+
+    frames = []
+    for name, q in (("curnow_leakage", "A"), ("purified_leakage", "B"), ("structure_leakage", "C")):
+        p = PROCESSED / f"{name}.csv"
+        if p.exists():
+            d = pd.read_csv(p)
+            d["question"] = q
+            frames.append(d)
+    if frames:
+        all_df = pd.concat(frames, ignore_index=True)
+        all_df["split"] = all_df["question"] + " / " + all_df["split"]
+        figmod.leakage_auc(all_df, FIGURES)
 
 
 def panel_main() -> None:

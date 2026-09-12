@@ -9,7 +9,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 from mpatlas.features import matrix
-from mpatlas.paths import PROCESSED, ensure_dirs
+from mpatlas.paths import PROCESSED, REPORTS, ensure_dirs
 from mpatlas.splits import cluster_split, group_split, hamming_clusters, random_split, split_ok
 
 
@@ -120,6 +120,8 @@ def run_binary(
 
 def write_results(df: pd.DataFrame, name: str) -> None:
     ensure_dirs()
-    path = PROCESSED / f"{name}.csv"
-    df.to_csv(path, index=False)
+    for folder in (PROCESSED, REPORTS):
+        folder.mkdir(parents=True, exist_ok=True)
+        path = folder / f"{name}.csv"
+        df.to_csv(path, index=False)
     (PROCESSED / f"{name}.json").write_text(df.to_json(orient="records", indent=2))

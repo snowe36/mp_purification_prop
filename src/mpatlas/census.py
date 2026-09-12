@@ -92,19 +92,6 @@ def run_census(
     reports_dir = reports_dir or REPORTS
     processed_dir = processed_dir or PROCESSED
     bags = bags or gather()
-    layers = []
-    for name, rows in bags.items():
-        q = Counter(r.question for r in rows)
-        layers.append(
-            {
-                "source": name,
-                "n": len(rows),
-                "n_with_sequence": sum(1 for r in rows if r.sequence),
-                "questions": dict(q),
-                "n_label_pos": sum(1 for r in rows if r.label == 1),
-                "n_label_neg": sum(1 for r in rows if r.label == 0),
-            }
-        )
 
     tt = bags.get("targettrack") or []
     cloned = [r for r in tt if STATUS_RANK.get(r.status or "", 0) >= 2]
@@ -153,6 +140,20 @@ def run_census(
         swiss
     ) >= STOP["C_min_bg"]
     c_model = swiss_pos >= 200 and (len(swiss) - swiss_pos) >= 200
+
+    layers = []
+    for name, rows in bags.items():
+        q = Counter(r.question for r in rows)
+        layers.append(
+            {
+                "source": name,
+                "n": len(rows),
+                "n_with_sequence": sum(1 for r in rows if r.sequence),
+                "questions": dict(q),
+                "n_label_pos": sum(1 for r in rows if r.label == 1),
+                "n_label_neg": sum(1 for r in rows if r.label == 0),
+            }
+        )
 
     result = {
         "layers": layers,

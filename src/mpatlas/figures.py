@@ -54,12 +54,13 @@ def leakage_auc(df: pd.DataFrame, dest: Path | None = None) -> Path:
             linewidth=0.4,
         )
     ax.set_xticks(x)
-    ax.set_xticklabels(splits)
+    ax.set_xticklabels(splits, rotation=20 if len(splits) > 4 else 0, ha="right" if len(splits) > 4 else "center")
     ax.set_ylabel("ROC-AUC")
     ax.set_ylim(0.45, 1.02)
     ax.axhline(0.5, color=GRID, lw=1)
     ax.legend(frameon=False)
-    ax.set_title("Expression models look strong until the split matches the biology")
+    ax.set_title("Random-split skill is not the same as a center or organism holdout")
+    fig.set_size_inches(8.0 if len(splits) > 4 else 6.4, 4.2)
     return _save(fig, "fig_leakage_auc.png", dest)
 
 
@@ -80,7 +81,9 @@ def funnel(counts: dict[str, int], dest: Path | None = None) -> Path:
 
 def wrap_panel(sequences: list[str], names: list[str] | None = None, dest: Path | None = None) -> Path:
     names = names or [f"p{i}" for i in range(len(sequences))]
-    scores = [wrap_score(s) for s in sequences]
+    pairs = list(reversed(list(zip([wrap_score(s) for s in sequences], names, strict=True))))
+    scores = [p[0] for p in pairs]
+    names = [p[1] for p in pairs]
     fig, ax = plt.subplots(figsize=(6.4, 4.2))
     y = np.arange(len(scores))
     colors = [POS if s.amenable else NEG for s in scores]
