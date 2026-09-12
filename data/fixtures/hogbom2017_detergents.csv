@@ -1,0 +1,17 @@
+abbrev,family,chemical
+NM,maltoside,n-nonyl-β-D-maltoside
+DM,maltoside,n-decyl-β-D-maltoside
+UDM,maltoside,n-undecyl-β-D-maltoside
+DDM,maltoside,n-dodecyl-β-D-maltoside
+CYMAL-4,cymal,4-cyclohexyl-1-butyl-β-D-maltoside
+CYMAL-5,cymal,5-cyclohexyl-1-pentyl-β-D-maltoside
+CYMAL-6,cymal,6-cyclohexyl-1-hexyl-β-D-maltoside
+CYMAL-7,cymal,7-cyclohexyl-1-heptyl-β-D-maltoside
+OG,glucoside,n-octyl-β-D-glucoside
+NG,glucoside,n-nonyl-β-D-glucoside
+DDAO,amine-oxide,n-decyl-N,N-dimethylamine-N-oxide
+UDAO,amine-oxide,n-undecyl-N,N-dimethylamine-N-oxide
+LDAO,amine-oxide,n-dodecyl-N,N-dimethylamine-N-oxide
+C8E4,peg,octyl tetraethylene glycol ether
+C10E5,peg,decyl pentaethylene glycol ether
+C12E8,peg,dodecyl octaethylene glycol ether

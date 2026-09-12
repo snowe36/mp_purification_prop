@@ -1,0 +1,10 @@
+protein,organism,family,function,n_trp,pdb_ids
+DgoT,Escherichia coli,MFS transporter,putative galactonate transporter,14,6E9N;6E9O
+MdfA,Escherichia coli,MFS transporter,multidrug resistance,9,4ZP0;4ZOW;4ZP2;6GV1;6EUQ
+DtpA,Escherichia coli,MFS transporter,peptide transporter,10,6GS1;6GS4;6GS7
+Kv1,Pseudomonas aeruginosa,unknown,unknown,17,
+Ij1,Escherichia coli,ABC transporter,ion transport,22,
+P2X4,Homo sapiens,P2X receptor,neuropathic pain regulator,6,4DW0;4DW1
+BR,Halobacterium salinarum,7TM retinal,proton pump,8,4MD1;4MD2;4XXJ
+LacY,Escherichia coli,MFS transporter,beta-galactoside transport,5,1PV6
+Im1,Escherichia coli,HisKA,kinase,2,
