@@ -35,7 +35,6 @@ def wrap_score(seq: str, topo: Topology | None = None, feat: FeatureRow | None =
         reasons.append(f"tm_frac={feat.tm_frac:.2f}")
 
     fusible = feat.n_term_extra > 0.5 or feat.c_term_extra > 0.5 or not feat.n_tm
-    # cytoplasmic termini are also fusion-able for WRAP (cytoplasmic expression)
     n_term_kind = topo.segments[0].kind if topo.segments else "unknown"
     c_term_kind = topo.segments[-1].kind if topo.segments else "unknown"
     if n_term_kind in {"cyto", "extra"} or c_term_kind in {"cyto", "extra"}:

@@ -35,8 +35,8 @@
       "questions": {
         "C": 80943
       },
-      "n_label_pos": 0,
-      "n_label_neg": 80943
+      "n_label_pos": 2200,
+      "n_label_neg": 78743
     },
     {
       "source": "mpstruc",

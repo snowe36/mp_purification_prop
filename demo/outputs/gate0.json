@@ -11,6 +11,22 @@
       "n_label_neg": 1054
     },
     {
+      "source": "curnow_unlabelled",
+      "n": 0,
+      "n_with_sequence": 0,
+      "questions": {},
+      "n_label_pos": 0,
+      "n_label_neg": 0
+    },
+    {
+      "source": "gfp",
+      "n": 0,
+      "n_with_sequence": 0,
+      "questions": {},
+      "n_label_pos": 0,
+      "n_label_neg": 0
+    },
+    {
       "source": "uniprot",
       "n": 0,
       "n_with_sequence": 0,
@@ -65,6 +81,14 @@
     "expressed": 0,
     "purified": 0,
     "centers_with_purified": {},
+    "funnel": {
+      "selected": 0,
+      "cloned": 0,
+      "expressed": 0,
+      "soluble": 0,
+      "purified": 0,
+      "in pdb": 0
+    },
     "claim_B": false
   },
   "purificationdb": {
@@ -77,12 +101,15 @@
     "mpstruc_or_pdbtm_pdb_ids": 0,
     "swiss_tm": 0,
     "swiss_with_structure_join": 0,
-    "claim_C": false
+    "claim_C": false,
+    "claim_C_model": false
   },
   "curnow": {
     "n": 2176,
+    "n_unlabelled": 0,
     "claim_A_local": true,
-    "claim_A_transfer": false
+    "claim_A_transfer": false,
+    "gfp_n": 0
   },
   "stop": {
     "B": "census_only",
