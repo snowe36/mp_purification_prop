@@ -7,7 +7,7 @@ import gzip
 from pathlib import Path
 
 from mpatlas.embed import seq_key
-from mpatlas.ingest import curnow, targettrack, unitmp, uniprot
+from mpatlas.ingest import curnow, gfp, targettrack, unitmp, uniprot
 from mpatlas.paths import PROCESSED, ensure_dirs
 
 MIN_LEN = 20
@@ -39,6 +39,10 @@ def main() -> None:
     print("n", len(store), flush=True)
     print("targettrack ...", flush=True)
     for r in targettrack.load():
+        _add(store, r.sequence)
+    print("n", len(store), flush=True)
+    print("gfp ...", flush=True)
+    for r in gfp.load():
         _add(store, r.sequence)
     print("n", len(store), flush=True)
     dest = PROCESSED / "embed_universe.fasta.gz"

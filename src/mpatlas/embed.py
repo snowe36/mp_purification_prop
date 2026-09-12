@@ -15,6 +15,7 @@ MAX_LEN = 1022
 
 
 def seq_key(seq: str) -> str:
+    seq = "".join(aa for aa in seq.upper() if aa.isalpha())[:MAX_LEN]
     return hashlib.sha1(seq.encode("ascii", errors="ignore")).hexdigest()
 
 
@@ -27,11 +28,19 @@ class EmbedIndex:
         self.X = np.asarray(data["X"], dtype=np.float32)
         self.model = str(data["model"][0]) if "model" in data.files else MODEL_ID
 
+    def has(self, seq: str) -> bool:
+        return seq_key(seq) in self._ix
+
     def get(self, seq: str) -> np.ndarray | None:
         i = self._ix.get(seq_key(seq))
         if i is None:
             return None
         return self.X[i]
+
+    def coverage(self, sequences: list[str]) -> float:
+        if not sequences:
+            return 0.0
+        return sum(self.has(s) for s in sequences) / len(sequences)
 
     def matrix(self, sequences: list[str]) -> np.ndarray | None:
         rows = []

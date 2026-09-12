@@ -221,6 +221,12 @@ def run_census(
             "claim_A_transfer": False,
             "gfp_n": len(bags.get("gfp") or []),
         },
+        "gfp": _gfp_summary(bags.get("gfp") or []),
+        "topdb": {
+            "n": len(bags.get("topdb") or []),
+            "n_with_sequence": sum(1 for r in (bags.get("topdb") or []) if r.sequence),
+            "n_with_pdb": sum(1 for r in (bags.get("topdb") or []) if r.pdb_id),
+        },
         "stop": {
             "B": "fit" if b_ok else "census_only",
             "B-conditions": "fit" if bcond_ok else ("prior" if bcond_prior else "lookup_only"),
@@ -244,6 +250,20 @@ def run_census(
             df.to_parquet(processed_dir / f"{name}.parquet", index=False)
         pd.DataFrame(layers).to_csv(processed_dir / "census_layers.csv", index=False)
     return result
+
+
+def _gfp_summary(rows: list[Record]) -> dict:
+    daley = [r for r in rows if r.source == "daley"]
+    hammon = [r for r in rows if r.source == "hammon"]
+    return {
+        "n": len(rows),
+        "daley_n": len(daley),
+        "daley_joined": sum(1 for r in daley if r.sequence),
+        "daley_pos_joined": sum(1 for r in daley if r.sequence and r.label == 1),
+        "hammon_n": len(hammon),
+        "hammon_joined": sum(1 for r in hammon if r.sequence),
+        "hammon_pos_joined": sum(1 for r in hammon if r.sequence and r.label == 1),
+    }
 
 
 def _top(d, n: int = 8) -> dict:
@@ -279,6 +299,13 @@ def _markdown(result: dict) -> str:
         "",
         "## C",
         f"- PDB ids {result['structure']['mpstruc_or_pdbtm_pdb_ids']}, Swiss-Prot TM {result['structure']['swiss_tm']}, join positives {result['structure']['swiss_with_structure_join']}",
+        "",
+        "## GFP transfer tables (A, not pooled with Curnow)",
+        f"- Daley n {result.get('gfp', {}).get('daley_n', 0)}, joined {result.get('gfp', {}).get('daley_joined', 0)}",
+        f"- Hammon n {result.get('gfp', {}).get('hammon_n', 0)}, joined {result.get('gfp', {}).get('hammon_joined', 0)}",
+        "",
+        "## TOPDB",
+        f"- n {result.get('topdb', {}).get('n', 0)}, with sequence {result.get('topdb', {}).get('n_with_sequence', 0)}, PDB xref {result.get('topdb', {}).get('n_with_pdb', 0)}",
         "",
         "## Stop",
         *(f"- {k}: {v}" for k, v in result["stop"].items()),

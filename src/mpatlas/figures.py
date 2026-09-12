@@ -64,6 +64,37 @@ def leakage_auc(df: pd.DataFrame, dest: Path | None = None) -> Path:
     return _save(fig, "fig_leakage_auc.png", dest)
 
 
+def embed_auc(df: pd.DataFrame, dest: Path | None = None) -> Path:
+    sub = df[df["model"].eq("rf")].copy() if "model" in df.columns else df
+    splits = list(dict.fromkeys(sub["split"]))
+    feats = list(dict.fromkeys(sub["features"]))
+    fig, ax = plt.subplots(figsize=(8.0, 4.2))
+    x = np.arange(len(splits))
+    width = 0.8 / max(len(feats), 1)
+    for i, feat in enumerate(feats):
+        vals = []
+        for s in splits:
+            hit = sub[(sub["split"] == s) & (sub["features"] == feat)]
+            vals.append(float(hit["roc_auc"].mean()) if len(hit) else float("nan"))
+        ax.bar(
+            x + (i - (len(feats) - 1) / 2) * width,
+            vals,
+            width=width,
+            label=feat,
+            color=SERIES[i % len(SERIES)],
+            edgecolor=TEXT,
+            linewidth=0.4,
+        )
+    ax.set_xticks(x)
+    ax.set_xticklabels(splits, rotation=20, ha="right")
+    ax.set_ylabel("ROC-AUC")
+    ax.set_ylim(0.45, 1.02)
+    ax.axhline(0.5, color=GRID, lw=1)
+    ax.legend(frameon=False, title="features")
+    ax.set_title("ESM vs composition on the same leakage splits")
+    return _save(fig, "fig_embed_auc.png", dest)
+
+
 def funnel(counts: dict[str, int], dest: Path | None = None) -> Path:
     fig, ax = plt.subplots(figsize=(6.4, 4.2))
     order = [k for k in ("selected", "cloned", "expressed", "soluble", "purified", "in pdb") if k in counts]

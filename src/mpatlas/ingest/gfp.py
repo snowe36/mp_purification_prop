@@ -68,8 +68,10 @@ def load() -> list[Record]:
         df = pd.read_csv(HAMMON)
         for rec in df.to_dict("records"):
             acc = str(rec.get("accession") or "")
+            raw = str(rec.get("sequence") or "")
+            raw = "".join(aa for aa in raw.upper() if aa.isalpha())
             hit = by_acc.get(acc)
-            seq, org = hit if hit else ("", str(rec.get("organism") or ""))
+            seq, org = (raw, str(rec.get("organism") or "")) if raw else (hit if hit else ("", str(rec.get("organism") or "")))
             out.append(
                 Record(
                     source="hammon",

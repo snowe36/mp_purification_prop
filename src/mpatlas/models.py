@@ -141,6 +141,41 @@ def run_binary(
     return df
 
 
+def run_transfer(
+    train_seq: list[str],
+    train_y: np.ndarray,
+    test_seq: list[str],
+    test_y: np.ndarray,
+    split: str,
+    embeds=None,
+    mode: str = "compose",
+) -> pd.DataFrame:
+    yte = test_y.astype(int)
+    if yte.sum() < 30 or (yte == 0).sum() < 30:
+        return pd.DataFrame()
+    Xtr = _stack(train_seq, embeds, mode)
+    Xte = _stack(test_seq, embeds, mode)
+    ytr = train_y.astype(int)
+    rows = []
+    for name, model in _models().items():
+        model.fit(Xtr, ytr)
+        p = model.predict_proba(Xte)[:, 1]
+        rows.append(
+            {
+                "split": split,
+                "model": name,
+                "n_train": int(len(ytr)),
+                "n_test": int(len(yte)),
+                "pos_rate_train": float(ytr.mean()),
+                "pos_rate_test": float(yte.mean()),
+                "roc_auc": float(roc_auc_score(yte, p)),
+                "pr_auc": float(average_precision_score(yte, p)),
+                "features": mode,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def write_results(df: pd.DataFrame, name: str) -> None:
     ensure_dirs()
     for folder in (PROCESSED, REPORTS):

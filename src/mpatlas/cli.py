@@ -9,7 +9,9 @@ from mpatlas import figures as figmod
 from mpatlas.census import run_census
 from mpatlas.ingest import curnow, download_all
 from mpatlas.ingest import uniprot as uniprot_mod
-from mpatlas.models import run_binary, run_curnow, subsample_idx, write_results
+from mpatlas.embed import load as load_embeds
+from mpatlas.ingest import gfp
+from mpatlas.models import run_binary, run_curnow, run_transfer, subsample_idx, write_results
 from mpatlas.paths import FIGURES, PROCESSED, REPORTS, ensure_dirs
 from mpatlas.playbook import advise_table, fit_purify_logreg
 from mpatlas.wrap import wrap_score
@@ -40,6 +42,22 @@ def _sub_frame(df: pd.DataFrame, y: np.ndarray, max_n: int = 4000) -> pd.DataFra
     return df.iloc[idx].reset_index(drop=True)
 
 
+def _modes(seqs: list[str]):
+    embeds = load_embeds()
+    modes = ["compose"]
+    if embeds is not None and embeds.coverage(seqs) >= 0.99:
+        modes = ["compose", "esm", "both"]
+    elif embeds is not None:
+        print(f"embeddings coverage {embeds.coverage(seqs):.3f}; compose only", flush=True)
+    return embeds, modes
+
+
+def _compose(df: pd.DataFrame) -> pd.DataFrame:
+    if df.empty or "features" not in df.columns:
+        return df
+    return df[df["features"].eq("compose")].copy()
+
+
 def express_main() -> None:
     ensure_dirs()
     rows = curnow.load_labelled()
@@ -47,10 +65,13 @@ def express_main() -> None:
         raise SystemExit("no Curnow labels; run mpx-download")
     seqs = [r.sequence for r in rows]
     y = np.array([int(r.label or 0) for r in rows])
-    df = run_curnow(seqs, y)
+    embeds, modes = _modes(seqs)
+    frames = [run_curnow(seqs, y, embeds=embeds, mode=m) for m in modes]
+    df = pd.concat([f for f in frames if not f.empty], ignore_index=True) if frames else pd.DataFrame()
     write_results(df, "curnow_leakage")
-    if not df.empty:
-        figmod.leakage_auc(df, FIGURES)
+    plot = _compose(df)
+    if not plot.empty:
+        figmod.leakage_auc(plot, FIGURES)
         (FIGURES / "fig_curnow_auc.png").write_bytes((FIGURES / "fig_leakage_auc.png").read_bytes())
     print("A", df.to_string(index=False) if not df.empty else "no splits passed the sample floor")
 
@@ -71,12 +92,22 @@ def express_main() -> None:
                 yb = (cloned["status_rank"] >= 5).astype(int).to_numpy()
                 centers = cloned.get("center", pd.Series(["unk"] * len(cloned))).fillna("unk").astype(str)
                 holdout = sorted({c for c in centers if c != "NYCOMPS"})
-                bdf = run_binary(
-                    cloned["sequence"].tolist(),
-                    yb,
-                    centers.tolist(),
-                    "center",
-                    holdout=holdout or None,
+                b_seqs = cloned["sequence"].tolist()
+                b_embeds, b_modes = _modes(b_seqs)
+                bdf = pd.concat(
+                    [
+                        run_binary(
+                            b_seqs,
+                            yb,
+                            centers.tolist(),
+                            "center",
+                            holdout=holdout or None,
+                            embeds=b_embeds,
+                            mode=m,
+                        )
+                        for m in b_modes
+                    ],
+                    ignore_index=True,
                 )
                 write_results(bdf, "purified_leakage")
                 print("B", bdf.to_string(index=False) if not bdf.empty else "skipped")
@@ -122,7 +153,23 @@ def express_main() -> None:
                 groups = sub.get("domain", sub.get("organism", pd.Series(["unk"] * len(sub))))
                 groups = groups.fillna("unk").astype(str).tolist()
                 holdout = ["eukaryote"] if "eukaryote" in groups else None
-                cdf = run_binary(sub["sequence"].tolist(), sub["label"].to_numpy(), groups, "organism", holdout=holdout)
+                c_seqs = sub["sequence"].tolist()
+                c_embeds, c_modes = _modes(c_seqs)
+                cdf = pd.concat(
+                    [
+                        run_binary(
+                            c_seqs,
+                            sub["label"].to_numpy(),
+                            groups,
+                            "organism",
+                            holdout=holdout,
+                            embeds=c_embeds,
+                            mode=m,
+                        )
+                        for m in c_modes
+                    ],
+                    ignore_index=True,
+                )
                 write_results(cdf, "structure_leakage")
                 print("C", cdf.to_string(index=False) if not cdf.empty else "skipped")
 
@@ -131,6 +178,27 @@ def express_main() -> None:
         mp = pd.read_parquet(mp_path)
         if "architecture" in mp.columns:
             figmod.architecture_map(mp, FIGURES)
+
+    gfp_rows = gfp.load()
+    xfer_frames = []
+    for src in ("daley", "hammon"):
+        hit = [r for r in gfp_rows if r.source == src and r.sequence and r.label is not None]
+        if len(hit) < 80:
+            continue
+        te_seq = [r.sequence for r in hit]
+        te_y = np.array([int(r.label) for r in hit])
+        x_embeds, x_modes = _modes(te_seq)
+        for m in x_modes:
+            try:
+                xdf = run_transfer(seqs, y, te_seq, te_y, f"curnow_to_{src}", embeds=x_embeds, mode=m)
+            except ValueError:
+                continue
+            if not xdf.empty:
+                xfer_frames.append(xdf)
+    if xfer_frames:
+        xfer = pd.concat(xfer_frames, ignore_index=True)
+        write_results(xfer, "gfp_transfer")
+        print("A-transfer", xfer.to_string(index=False))
 
     frames = []
     for name, q in (("curnow_leakage", "A"), ("purified_leakage", "B"), ("structure_leakage", "C")):
@@ -142,7 +210,9 @@ def express_main() -> None:
     if frames:
         all_df = pd.concat(frames, ignore_index=True)
         all_df["split"] = all_df["question"] + " / " + all_df["split"]
-        figmod.leakage_auc(all_df, FIGURES)
+        figmod.leakage_auc(_compose(all_df), FIGURES)
+        if "features" in all_df.columns and all_df["features"].nunique() > 1:
+            figmod.embed_auc(all_df, FIGURES)
 
 
 def playbook_main() -> None:

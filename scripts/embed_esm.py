@@ -53,9 +53,13 @@ def main() -> None:
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"n={len(rows)} device={device} model={MODEL_ID}", flush=True)
     tok = AutoTokenizer.from_pretrained(MODEL_ID)
-    model = AutoModel.from_pretrained(MODEL_ID).to(device)
+    dtype = torch.float16 if device == "cuda" else torch.float32
+    model = AutoModel.from_pretrained(MODEL_ID, torch_dtype=dtype).to(device)
     model.eval()
     keys, vecs = [], []
+    dest = Path(args.out)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    ckpt = dest.with_suffix(".partial.npz")
     with torch.no_grad():
         for i in range(0, len(rows), args.batch):
             chunk = rows[i : i + args.batch]
@@ -72,12 +76,17 @@ def main() -> None:
             pooled = mean_pool(out.last_hidden_state, batch["attention_mask"])
             keys.extend(k for k, _ in chunk)
             vecs.append(pooled.float().cpu().numpy())
+            n_done = i + len(chunk)
             if (i // args.batch) % 20 == 0:
-                print(f"done {i + len(chunk)}/{len(rows)}", flush=True)
+                print(f"done {n_done}/{len(rows)}", flush=True)
+            if n_done % 4000 == 0:
+                Xpart = np.concatenate(vecs, axis=0).astype(np.float16)
+                np.savez(ckpt, keys=np.array(keys), X=Xpart, model=np.array([MODEL_ID]))
+                print(f"checkpoint {ckpt} n={len(keys)}", flush=True)
     X = np.concatenate(vecs, axis=0).astype(np.float16)
-    dest = Path(args.out)
-    dest.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(dest, keys=np.array(keys), X=X, model=np.array([MODEL_ID]))
+    if ckpt.exists():
+        ckpt.unlink()
     print(f"wrote {dest} shape={X.shape}", flush=True)
 
 

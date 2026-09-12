@@ -71,3 +71,5 @@ def test_gfp_fixtures_have_paper_n():
     assert set(daley["label"]) <= {0, 1}
     assert len(hammon) == 313
     assert int(hammon["label"].sum()) == 64
+    if "sequence" in hammon.columns:
+        assert int((hammon["sequence"].fillna("").str.len() > 10).sum()) == 313
