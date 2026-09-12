@@ -84,10 +84,10 @@
     },
     {
       "source": "gpcrdb",
-      "n": 1283,
+      "n": 1289,
       "n_with_sequence": 0,
       "questions": {
-        "B-conditions": 1283
+        "B-conditions": 1289
       },
       "n_label_pos": 0,
       "n_label_neg": 0
@@ -158,25 +158,18 @@
     "A": "fit_local"
   },
   "gpcrdb": {
-    "n_rows": 1283,
+    "n_rows": 1289,
     "n_solubilization": 442,
     "n_pdb": 268,
     "detergents": {
       "DDM": 155,
       "DM": 69,
       "LMNG": 20,
-      "OG": 6,
-      "HTG(heptylthioglucoside)": 4,
+      "OG": 11,
+      "NG": 8,
+      "HTG": 4,
       "sodium cholate": 3,
-      "nonyl-glucoside": 3,
-      "NG/HPTO": 2,
-      "OG( n-octyl-b-D-glucopyranoside)": 2,
-      "OG (n-octyl-\u03b2-D-glucopyranoside)": 2,
       "digitonin": 1,
-      "OG (b-D-octylglucopyranoside)": 1,
-      "NG(nonyl-glucoside detergent )": 1,
-      "NG or n-octyl-\u03b2-D-glucopyranoside (OG)": 1,
-      "NG": 1,
       "LDAO": 1
     },
     "additives": {
@@ -187,21 +180,21 @@
       "NaCl": 2,
       "Na-cholate": 1,
       "Glycerol": 1,
-      "HPTO(heptylthioglucoside)": 1
+      "HTG": 1
     },
     "extract_combos": {
       "DDM+CHS": 122,
       "DM": 63,
       "DDM": 29,
       "LMNG+CHS": 19,
-      "OG": 6,
+      "OG": 11,
+      "NG": 8,
       "DM+CHS": 5,
-      "HTG(heptylthioglucoside)": 4,
+      "HTG": 4,
       "DDM+sodium cholate+CHS": 3,
-      "nonyl-glucoside": 3,
-      "NG/HPTO": 2,
-      "OG( n-octyl-b-D-glucopyranoside)": 2,
-      "OG (n-octyl-\u03b2-D-glucopyranoside)": 2
+      "digitonin": 1,
+      "LMNG": 1,
+      "LDAO": 1
     },
     "chromatography": {
       "immobilized metal affinity chromatography (IMAC) done": 80,

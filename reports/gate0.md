@@ -11,7 +11,7 @@
 | topdb | 0 | 0 |
 | targettrack | 20583 | 20583 |
 | purificationdb | 0 | 0 |
-| gpcrdb | 1283 | 0 |
+| gpcrdb | 1289 | 0 |
 | screens | 206 | 0 |
 
 ## B (TargetTrack)
@@ -23,9 +23,10 @@
 - n 0, TM slice 0, detergent rows 0
 
 ## B-conditions (GPCRdb + screens)
-- GPCRdb rows 1283, solubilization 442, unique PDBs 268
-- detergent counts: {'DDM': 155, 'DM': 69, 'LMNG': 20, 'OG': 6, 'HTG(heptylthioglucoside)': 4, 'sodium cholate': 3, 'nonyl-glucoside': 3, 'NG/HPTO': 2, 'OG( n-octyl-b-D-glucopyranoside)': 2, 'OG (n-octyl-β-D-glucopyranoside)': 2, 'digitonin': 1, 'OG (b-D-octylglucopyranoside)': 1, 'NG(nonyl-glucoside detergent )': 1, 'NG or n-octyl-β-D-glucopyranoside (OG)': 1, 'NG': 1, 'LDAO': 1}
-- additive counts: {'CHS': 150, 'CHAPS': 6, 'sodium cholate': 4, 'Zn2+': 3, 'NaCl': 2, 'Na-cholate': 1, 'Glycerol': 1, 'HPTO(heptylthioglucoside)': 1}
+- GPCRdb rows 1289, solubilization 442, unique PDBs 268
+- top detergents: {'DDM': 155, 'DM': 69, 'LMNG': 20, 'OG': 11, 'NG': 8, 'HTG': 4, 'sodium cholate': 3, 'digitonin': 1}
+- top additives: {'CHS': 150, 'CHAPS': 6, 'sodium cholate': 4, 'Zn2+': 3}
+- extract combos: {'DDM+CHS': 122, 'DM': 63, 'DDM': 29, 'LMNG+CHS': 19}
 - screens: {'hogbom2017': {'targets': 60, 'detergents': 16, 'findings': 7}, 'kotov2019': {'targets': 9, 'detergents': 94, 'findings': 6}, 'lantez2015': {'targets': 0, 'detergents': 0, 'findings': 6}, 'lin2016': {'targets': 0, 'detergents': 0, 'findings': 8}}
 - recipe prior (not a purify classifier): **True**
 
