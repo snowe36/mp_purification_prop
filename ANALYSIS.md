@@ -98,6 +98,8 @@ Computed only from amino-acid sequence plus topology annotation or Kyte–Doolit
 
 No embeddings, no DeepTMHMM-as-a-service, no codon features unless a nucleotide sequence is supplied by the source (Curnow DNA is optional and not used in the primary A model).
 
+**Amendment (embeddings):** ESM-2 650M mean-pooled vectors may be concatenated to v1 features or used alone. They are reported under the same splits. A rise in random-split AUC without a rise in center/organism AUC is leakage, not a better HTS prior.
+
 ---
 
 ## 6. Splits
@@ -158,4 +160,6 @@ Before fitting:
 
 - 2026-09-11 Gate 0: UniTmp PDBTM/TOPDB bulk XML and PurificationDB dumps were unreachable at ingest time. Question C uses mpstruc (4,285 unique PDB IDs) joined to Swiss-Prot TM. B-conditions stays lookup-only (n=0). GFP-paper supplements were not present as machine-readable tables.
 - 2026-09-11 B-action playbook: `mpx-playbook` trains P(purified | expressed) on TargetTrack membrane centers and layers WRAP amenability plus construct levers. Allowed outputs are the four action tokens above. Forbidden: claiming detergent conditions, designed WRAPs, or FSEC success.
-- 2026-09-11 B-conditions recipes: PurificationDB remains n=0. GPCRdb construct Excel (solubilization / purification / xtal chemicals) is ingested as a GPCR success-only recipe table. Literature screens added as committed catalogs: Lantez 2015 (n=31, winner list only), Lin 2016 (n=2, 1% / 0.03% DDM), Högbom 2017 (60 E. coli GFP MPs × 16 detergents, family-level claims), Kotov 2019 (9 IMPs × 94-detergent nanoDSF). Playbook may attach a detergent **prior**; it still must not train will-it-purify on these rows. Fos-12 is a Lantez solubilization winner and a Kotov unfolding detergent — those claims are kept separate.
+- 2026-09-11 embeddings: ESM-2 650M mean-pool on the unique-sequence universe (Swiss-Prot TM + Curnow + TOPDB + TargetTrack). Same leakage splits as composition features. Modes: `compose`, `esm`, `both`. Embeddings are not a new question and are not allowed to be reported as A skill on natural proteins unless the GFP transfer split is shown.
+- 2026-09-11 GFP transfer tables: Daley 2005 Table S1 GFP fusions with GFP/ml > 0 (n=579, median split); Hammon 2009 Supporting Table 1 (313/314 parsed; label FSU ≥ 60,000 as in the paper, 64 positives). Sequences joined to Swiss-Prot TM by E. coli gene (Daley) or UniProt accession (Hammon).
+- 2026-09-11 TOPDB XML ingested from a local dump (unitmp bulk URLs still 404). PDBTM bulk XML remains missing.

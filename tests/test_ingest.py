@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from mpatlas.census import run_census
-from mpatlas.ingest import gpcrdb, purificationdb, targettrack, unitmp
+from mpatlas.ingest import gfp, purificationdb, targettrack, unitmp
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -50,3 +50,24 @@ def test_census_stop_rule_on_tiny_bags(tmp_path: Path):
     assert result["stop"]["B"] == "census_only"
     assert result["stop"]["B-conditions"] == "lookup_only"
     assert result["targettrack"]["purified"] == 1
+
+
+def test_topdb_reads_numtm_and_seq():
+    rows = unitmp.load_topdb(FIXTURES / "topdb_tiny.xml")
+    assert len(rows) == 1
+    assert rows[0].accession == "TEST_HUMAN"
+    assert rows[0].n_tm == 2
+    assert rows[0].pdb_id == "1ABC"
+    assert rows[0].sequence.startswith("MIFLF")
+
+
+def test_gfp_fixtures_have_paper_n():
+    import pandas as pd
+    from mpatlas.paths import FIXTURES
+
+    daley = pd.read_csv(FIXTURES / "daley2005.csv")
+    hammon = pd.read_csv(FIXTURES / "hammon2009.csv")
+    assert len(daley) == 579
+    assert set(daley["label"]) <= {0, 1}
+    assert len(hammon) == 313
+    assert int(hammon["label"].sum()) == 64
