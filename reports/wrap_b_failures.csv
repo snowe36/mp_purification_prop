@@ -1,0 +1,41 @@
+score,amenable,accession,reasons
+0.950,1,NYCOMPS-GO.8544,n_tm=3|hydrophobic overall|tm_frac=0.17|fusion terminus cyto/extra|length=366
+0.950,1,NYCOMPS-GO.8439,n_tm=2|hydrophobic overall|tm_frac=0.17|fusion terminus cyto/cyto|length=356
+0.950,1,NYCOMPS-GO.8336,n_tm=3|hydrophobic overall|tm_frac=0.16|fusion terminus extra/tm|length=435
+0.950,1,NYCOMPS-GO.3873,n_tm=2|hydrophobic overall|tm_frac=0.31|fusion terminus cyto/cyto|length=158
+0.800,1,NYCOMPS-GO.9910,n_tm=1|hydrophobic overall|tm_frac=0.23|fusion terminus cyto/extra
+0.750,1,NYCOMPS-GO.656,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=537
+0.750,1,NYCOMPS-GO.1366,n_tm=1|hydrophobic overall|fusion terminus extra/cyto|length=412
+0.750,1,NYCOMPS-GO.12228,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=225
+0.750,1,NYCOMPS-GO.14852,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=470
+0.750,1,NYCOMPS-GO.19214,n_tm=1|hydrophobic overall|fusion terminus extra/cyto|length=512
+0.750,1,NYCOMPS-GO.4446,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=286
+0.650,1,NYCOMPS-GO.10580,n_tm=1|hydrophobic overall|fusion terminus extra/cyto|length=353|glycosylation sequons=4
+0.650,1,NYCOMPS-GO.15194,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=433|glycosylation sequons=5
+0.550,1,NYCOMPS-GO.3292,n_tm=1|fusion terminus extra/cyto|length=589
+0.550,1,NYCOMPS-GO.19457,n_tm=2|fusion terminus cyto/cyto|length=596
+0.350,0,NYCOMPS-GO.1012,no predicted TM belt|hydrophobic overall|length=140
+0.350,0,NYCOMPS-GO.2966,no predicted TM belt|hydrophobic overall|length=235
+0.350,0,NYCOMPS-GO.2724,no predicted TM belt|hydrophobic overall|length=363
+0.350,0,MPSBC-Ers1pSklu,no predicted TM belt|hydrophobic overall|length=259
+0.350,0,NYCOMPS-GO.3202,no predicted TM belt|hydrophobic overall|length=448
+0.350,0,NYCOMPS-GO.832,no predicted TM belt|hydrophobic overall|length=478
+0.350,0,NYCOMPS-GO.4273,no predicted TM belt|hydrophobic overall|length=306
+0.350,0,NYCOMPS-GO.2737,no predicted TM belt|hydrophobic overall|length=137
+0.350,0,NYCOMPS-GO.14875,no predicted TM belt|hydrophobic overall|length=433
+0.350,0,NYCOMPS-GO.2364,no predicted TM belt|hydrophobic overall|length=247
+0.350,0,NYCOMPS-GO.3812,no predicted TM belt|hydrophobic overall|length=139
+0.350,0,NYCOMPS-GO.4680,no predicted TM belt|hydrophobic overall|length=306
+0.350,0,TransportPDB-0192,no predicted TM belt|hydrophobic overall|length=509
+0.350,0,NYCOMPS-GO.11656,no predicted TM belt|hydrophobic overall|length=229
+0.150,0,TMPC-GO.119411,no predicted TM belt|length=645
+0.150,0,NYCOMPS-GO.12975,no predicted TM belt|length=569
+0.150,0,MPP-GO.120025,no predicted TM belt|length=133
+0.150,0,MPP-GO.122241,no predicted TM belt|length=396
+0.150,0,CSMP-1999M,no predicted TM belt|length=294
+0.150,0,TransportPDB-0266,no predicted TM belt|length=418
+0.150,0,NYCOMPS-GO.15053,no predicted TM belt|length=309
+0.150,0,MPP-GO.123124,no predicted TM belt|length=151
+0.050,0,CSMP-2336S,no predicted TM belt|length=598|glycosylation sequons=6
+0.000,0,NYCOMPS-GO.3290,no predicted TM belt|long for single-particle WRAP-EM|glycosylation sequons=10
+0.000,0,MPP-GO.120231,no predicted TM belt

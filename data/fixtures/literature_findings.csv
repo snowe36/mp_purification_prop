@@ -1,0 +1,28 @@
+source,year,doi,n_proteins,protein,step,detergent,family,conc,unit,outcome,note
+lantez2015,2015,10.1002/elsc.201400187,31,,extract,DDM,maltoside,,,winner,automated His-tag screen; no public per-protein table
+lantez2015,2015,10.1002/elsc.201400187,31,,extract,DM,maltoside,,,winner,same screen
+lantez2015,2015,10.1002/elsc.201400187,31,,extract,DMNG,maltose-NG,,,winner,same screen
+lantez2015,2015,10.1002/elsc.201400187,31,,extract,TX100,peg,,,winner,solubilization winner; Kotov later flags PEG as unfolding
+lantez2015,2015,10.1002/elsc.201400187,31,,extract,LAPAO,amine-oxide,,,winner,same screen
+lantez2015,2015,10.1002/elsc.201400187,31,,extract,FC12,fos-choline,,,winner,solubilization winner; Kotov later flags fos-choline as unfolding
+lin2016,2016,10.1371/journal.pone.0157923,2,ASBTNM,extract,DDM,maltoside,1,% w/v,used,crude membranes; FA-SEC methods
+lin2016,2016,10.1371/journal.pone.0157923,2,ASBTNM,imac,DDM,maltoside,0.03,% w/v,used,Ni-NTA / reverse IMAC
+lin2016,2016,10.1371/journal.pone.0157923,2,ASBTNM,sec,DDM,maltoside,0.03,% w/v,used,Superose 6 running buffer
+lin2016,2016,10.1371/journal.pone.0157923,2,HiTehA,extract,DDM,maltoside,1,% w/v,screened,FA-SEC detergent panel
+lin2016,2016,10.1371/journal.pone.0157923,2,HiTehA,extract,DM,maltoside,1,% w/v,screened,FA-SEC detergent panel
+lin2016,2016,10.1371/journal.pone.0157923,2,HiTehA,extract,NM,maltoside,1,% w/v,screened,FA-SEC detergent panel
+lin2016,2016,10.1371/journal.pone.0157923,2,HiTehA,extract,LDAO,amine-oxide,1,% w/v,screened,FA-SEC detergent panel
+lin2016,2016,10.1371/journal.pone.0157923,2,HiTehA,extract,OG,glucoside,2,% w/v,screened,FA-SEC detergent panel
+hogbom2017,2017,10.1002/pro.3196,60,,extract,DDM,maltoside,,,favored,maltosides and CYMALs solubilized well; not a random set
+hogbom2017,2017,10.1002/pro.3196,60,,extract,CYMAL-7,cymal,,,favored,longer-chain CYMALs often higher amplitude
+hogbom2017,2017,10.1002/pro.3196,60,,extract,OG,glucoside,,,weak,alkyl glucosides often poor; 28/60 very poor in at least one family
+hogbom2017,2017,10.1002/pro.3196,60,,extract,C12E8,peg,,,weak,PEGs often poor solubilizers in this set
+hogbom2017,2017,10.1002/pro.3196,60,,imac,DDM,maltoside,,,tolerated,maltoside/CYMAL/amine oxide IMAC ok; glucosides lower yield
+hogbom2017,2017,10.1002/pro.3196,60,,sec,DDM,maltoside,0.03,% w/v,used,FSEC running buffer H7-DDM
+hogbom2017,2017,10.1002/pro.3196,60,,extract,,,,,do_not_pick_by_helix_count,authors: variation too large to choose detergent from TM count
+kotov2019,2019,10.1038/s41598-019-46686-8,9,,extract,DDM,maltoside,1-2,% w/v,used,membranes solubilized in DDM except BR in 1% OG
+kotov2019,2019,10.1038/s41598-019-46686-8,9,,sec,DDM,maltoside,,,used,SEC last step then 10-fold dilute into 94-detergent nanoDSF
+kotov2019,2019,10.1038/s41598-019-46686-8,9,transporters,stability,LMNG,maltose-NG,,,stabilize,DtpA DgoT MdfA LacY Ij1; GDN second
+kotov2019,2019,10.1038/s41598-019-46686-8,9,transporters,stability,OGNG,glucose-NG,,,destabilize,all analyzed transporters
+kotov2019,2019,10.1038/s41598-019-46686-8,9,,stability,FC12,fos-choline,,,unfold,soluble but unfolded by Tm vs Tagg
+kotov2019,2019,10.1038/s41598-019-46686-8,9,,stability,C12E8,peg,,,unfold,PEG family no DSF/scattering transitions
