@@ -47,14 +47,15 @@ def main() -> None:
     ap.add_argument("--out", required=True)
     ap.add_argument("--batch", type=int, default=8)
     ap.add_argument("--start", type=int, default=0)
+    ap.add_argument("--model", default=MODEL_ID)
     args = ap.parse_args()
     rows = read_fasta(Path(args.fasta))
     rows = rows[args.start :]
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"n={len(rows)} device={device} model={MODEL_ID}", flush=True)
-    tok = AutoTokenizer.from_pretrained(MODEL_ID)
+    print(f"n={len(rows)} device={device} model={args.model}", flush=True)
+    tok = AutoTokenizer.from_pretrained(args.model)
     dtype = torch.float16 if device == "cuda" else torch.float32
-    model = AutoModel.from_pretrained(MODEL_ID, torch_dtype=dtype).to(device)
+    model = AutoModel.from_pretrained(args.model, torch_dtype=dtype).to(device)
     model.eval()
     keys, vecs = [], []
     dest = Path(args.out)

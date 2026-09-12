@@ -3,39 +3,39 @@ score,amenable,accession,reasons
 0.950,1,NYCOMPS-GO.8439,n_tm=2|hydrophobic overall|tm_frac=0.17|fusion terminus cyto/cyto|length=356
 0.950,1,NYCOMPS-GO.8336,n_tm=3|hydrophobic overall|tm_frac=0.16|fusion terminus extra/tm|length=435
 0.950,1,NYCOMPS-GO.3873,n_tm=2|hydrophobic overall|tm_frac=0.31|fusion terminus cyto/cyto|length=158
-0.800,1,NYCOMPS-GO.9910,n_tm=1|hydrophobic overall|tm_frac=0.23|fusion terminus cyto/extra
-0.750,1,NYCOMPS-GO.656,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=537
-0.750,1,NYCOMPS-GO.1366,n_tm=1|hydrophobic overall|fusion terminus extra/cyto|length=412
-0.750,1,NYCOMPS-GO.12228,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=225
-0.750,1,NYCOMPS-GO.14852,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=470
-0.750,1,NYCOMPS-GO.19214,n_tm=1|hydrophobic overall|fusion terminus extra/cyto|length=512
-0.750,1,NYCOMPS-GO.4446,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=286
-0.650,1,NYCOMPS-GO.10580,n_tm=1|hydrophobic overall|fusion terminus extra/cyto|length=353|glycosylation sequons=4
-0.650,1,NYCOMPS-GO.15194,n_tm=1|hydrophobic overall|fusion terminus cyto/extra|length=433|glycosylation sequons=5
-0.550,1,NYCOMPS-GO.3292,n_tm=1|fusion terminus extra/cyto|length=589
-0.550,1,NYCOMPS-GO.19457,n_tm=2|fusion terminus cyto/cyto|length=596
-0.350,0,NYCOMPS-GO.1012,no predicted TM belt|hydrophobic overall|length=140
-0.350,0,NYCOMPS-GO.2966,no predicted TM belt|hydrophobic overall|length=235
-0.350,0,NYCOMPS-GO.2724,no predicted TM belt|hydrophobic overall|length=363
-0.350,0,MPSBC-Ers1pSklu,no predicted TM belt|hydrophobic overall|length=259
-0.350,0,NYCOMPS-GO.3202,no predicted TM belt|hydrophobic overall|length=448
-0.350,0,NYCOMPS-GO.832,no predicted TM belt|hydrophobic overall|length=478
-0.350,0,NYCOMPS-GO.4273,no predicted TM belt|hydrophobic overall|length=306
-0.350,0,NYCOMPS-GO.2737,no predicted TM belt|hydrophobic overall|length=137
-0.350,0,NYCOMPS-GO.14875,no predicted TM belt|hydrophobic overall|length=433
-0.350,0,NYCOMPS-GO.2364,no predicted TM belt|hydrophobic overall|length=247
-0.350,0,NYCOMPS-GO.3812,no predicted TM belt|hydrophobic overall|length=139
-0.350,0,NYCOMPS-GO.4680,no predicted TM belt|hydrophobic overall|length=306
-0.350,0,TransportPDB-0192,no predicted TM belt|hydrophobic overall|length=509
-0.350,0,NYCOMPS-GO.11656,no predicted TM belt|hydrophobic overall|length=229
-0.150,0,TMPC-GO.119411,no predicted TM belt|length=645
-0.150,0,NYCOMPS-GO.12975,no predicted TM belt|length=569
-0.150,0,MPP-GO.120025,no predicted TM belt|length=133
-0.150,0,MPP-GO.122241,no predicted TM belt|length=396
-0.150,0,CSMP-1999M,no predicted TM belt|length=294
-0.150,0,TransportPDB-0266,no predicted TM belt|length=418
-0.150,0,NYCOMPS-GO.15053,no predicted TM belt|length=309
-0.150,0,MPP-GO.123124,no predicted TM belt|length=151
-0.050,0,CSMP-2336S,no predicted TM belt|length=598|glycosylation sequons=6
-0.000,0,NYCOMPS-GO.3290,no predicted TM belt|long for single-particle WRAP-EM|glycosylation sequons=10
-0.000,0,MPP-GO.120231,no predicted TM belt
+0.950,1,NYCOMPS-GO.12163,n_tm=1|hydrophobic overall|tm_frac=0.15|fusion terminus cyto/extra|length=220
+0.950,1,NYCOMPS-GO.4726,n_tm=2|hydrophobic overall|tm_frac=0.17|fusion terminus cyto/cyto|length=301
+0.950,1,NYCOMPS-GO.15560,n_tm=2|hydrophobic overall|tm_frac=0.30|fusion terminus tm/cyto|length=153
+0.950,1,NYCOMPS-GO.230,n_tm=2|hydrophobic overall|tm_frac=0.22|fusion terminus cyto/cyto|length=175
+0.950,1,NYCOMPS-GO.10305,n_tm=2|hydrophobic overall|tm_frac=0.26|fusion terminus tm/cyto|length=167
+0.950,1,NYCOMPS-GO.535,n_tm=4|hydrophobic overall|tm_frac=0.19|fusion terminus cyto/cyto|length=367
+0.950,1,NYCOMPS-GO.6844,n_tm=1|hydrophobic overall|tm_frac=0.17|fusion terminus cyto/tm|length=130
+0.950,1,NYCOMPS-GO.7980,n_tm=3|hydrophobic overall|tm_frac=0.20|fusion terminus cyto/extra|length=246
+0.950,1,NYCOMPS-GO.13710,n_tm=3|hydrophobic overall|tm_frac=0.15|fusion terminus cyto/extra|length=429
+0.950,1,NYCOMPS-GO.981,n_tm=2|hydrophobic overall|tm_frac=0.22|fusion terminus cyto/cyto|length=385
+0.950,1,NYCOMPS-GO.710,n_tm=1|hydrophobic overall|tm_frac=0.16|fusion terminus cyto/extra|length=107
+0.950,1,NYCOMPS-GO.7839,n_tm=3|hydrophobic overall|tm_frac=0.21|fusion terminus extra/cyto|length=350
+0.950,1,NYCOMPS-GO.7797,n_tm=3|hydrophobic overall|tm_frac=0.16|fusion terminus extra/cyto|length=366
+0.950,1,NYCOMPS-GO.10357,n_tm=3|hydrophobic overall|tm_frac=0.65|fusion terminus extra/tm|length=128
+0.950,1,NYCOMPS-GO.1692,n_tm=4|hydrophobic overall|tm_frac=0.20|fusion terminus cyto/cyto|length=388
+0.950,1,NYCOMPS-GO.1141,n_tm=3|hydrophobic overall|tm_frac=0.17|fusion terminus cyto/extra|length=391
+0.950,1,NYCOMPS-GO.2762,n_tm=1|hydrophobic overall|tm_frac=0.15|fusion terminus extra/cyto|length=250
+0.950,1,NYCOMPS-GO.985,n_tm=3|hydrophobic overall|tm_frac=0.20|fusion terminus cyto/extra|length=268
+0.950,1,NYCOMPS-GO.8580,n_tm=1|hydrophobic overall|tm_frac=0.18|fusion terminus cyto/extra|length=137
+0.950,1,NYCOMPS-GO.2803,n_tm=1|hydrophobic overall|tm_frac=0.16|fusion terminus extra/cyto|length=159
+0.950,1,NYCOMPS-GO.2590,n_tm=2|hydrophobic overall|tm_frac=0.30|fusion terminus cyto/cyto|length=142
+0.950,1,NYCOMPS-GO.2579,n_tm=3|hydrophobic overall|tm_frac=0.15|fusion terminus cyto/extra|length=429
+0.950,1,NYCOMPS-GO.7894,n_tm=3|hydrophobic overall|tm_frac=0.20|fusion terminus cyto/extra|length=363
+0.950,1,NYCOMPS-GO.2832,n_tm=2|hydrophobic overall|tm_frac=0.15|fusion terminus extra/extra|length=227
+0.950,1,NYCOMPS-GO.8558,n_tm=3|hydrophobic overall|tm_frac=0.22|fusion terminus extra/cyto|length=361
+0.950,1,NYCOMPS-GO.1389,n_tm=3|hydrophobic overall|tm_frac=0.20|fusion terminus extra/cyto|length=476
+0.950,1,NYCOMPS-GO.8588,n_tm=4|hydrophobic overall|tm_frac=0.23|fusion terminus extra/extra|length=409
+0.950,1,NYCOMPS-GO.2754,n_tm=2|hydrophobic overall|tm_frac=0.29|fusion terminus cyto/cyto|length=140
+0.950,1,NYCOMPS-GO.4233,n_tm=2|hydrophobic overall|tm_frac=0.18|fusion terminus cyto/cyto|length=269
+0.950,1,NYCOMPS-GO.2967,n_tm=3|hydrophobic overall|tm_frac=0.16|fusion terminus extra/tm|length=429
+0.950,1,NYCOMPS-GO.7694,n_tm=1|hydrophobic overall|tm_frac=0.15|fusion terminus cyto/extra|length=144
+0.950,1,NYCOMPS-GO.8496,n_tm=3|hydrophobic overall|tm_frac=0.22|fusion terminus extra/cyto|length=348
+0.950,1,NYCOMPS-GO.14266,n_tm=2|hydrophobic overall|tm_frac=0.16|fusion terminus cyto/cyto|length=376
+0.950,1,NYCOMPS-GO.3855,n_tm=1|hydrophobic overall|tm_frac=0.23|fusion terminus tm/extra|length=185
+0.950,1,NYCOMPS-GO.1476,n_tm=2|hydrophobic overall|tm_frac=0.38|fusion terminus extra/extra|length=127
+0.950,1,NYCOMPS-GO.3819,n_tm=1|hydrophobic overall|tm_frac=0.17|fusion terminus cyto/extra|length=125

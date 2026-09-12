@@ -181,16 +181,24 @@ def express_main() -> None:
 
     gfp_rows = gfp.load()
     xfer_frames = []
+    x_embeds = load_embeds()
     for src in ("daley", "hammon"):
         hit = [r for r in gfp_rows if r.source == src and r.sequence and r.label is not None]
         if len(hit) < 80:
             continue
         te_seq = [r.sequence for r in hit]
         te_y = np.array([int(r.label) for r in hit])
-        x_embeds, x_modes = _modes(te_seq)
-        for m in x_modes:
+        jobs = [("compose", te_seq, te_y)]
+        if x_embeds is not None and x_embeds.coverage(seqs) >= 0.99:
+            keep = [i for i, s in enumerate(te_seq) if x_embeds.has(s)]
+            te_e = [te_seq[i] for i in keep]
+            y_e = te_y[keep]
+            if len(te_e) >= 80:
+                jobs.append(("esm", te_e, y_e))
+                jobs.append(("both", te_e, y_e))
+        for m, s_te, y_te in jobs:
             try:
-                xdf = run_transfer(seqs, y, te_seq, te_y, f"curnow_to_{src}", embeds=x_embeds, mode=m)
+                xdf = run_transfer(seqs, y, s_te, y_te, f"curnow_to_{src}", embeds=x_embeds, mode=m)
             except ValueError:
                 continue
             if not xdf.empty:

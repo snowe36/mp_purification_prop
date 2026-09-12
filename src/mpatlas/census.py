@@ -247,6 +247,8 @@ def run_census(
         processed_dir.mkdir(parents=True, exist_ok=True)
         frames = {k: records_to_df(v) for k, v in bags.items() if v}
         for name, df in frames.items():
+            for col in df.select_dtypes(include=["object", "string"]):
+                df[col] = df[col].map(lambda v: v if v is None or (isinstance(v, float) and pd.isna(v)) else str(v))
             df.to_parquet(processed_dir / f"{name}.parquet", index=False)
         pd.DataFrame(layers).to_csv(processed_dir / "census_layers.csv", index=False)
     return result

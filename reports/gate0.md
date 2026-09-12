@@ -4,11 +4,11 @@
 |---|---:|---:|
 | curnow | 2176 | 2176 |
 | curnow_unlabelled | 11503 | 11503 |
-| gfp | 0 | 0 |
+| gfp | 892 | 741 |
 | uniprot | 80943 | 80943 |
 | mpstruc | 4285 | 0 |
 | pdbtm | 0 | 0 |
-| topdb | 0 | 0 |
+| topdb | 9558 | 9558 |
 | targettrack | 20583 | 20583 |
 | purificationdb | 0 | 0 |
 | gpcrdb | 1289 | 0 |
@@ -32,6 +32,13 @@
 
 ## C
 - PDB ids 4285, Swiss-Prot TM 80943, join positives 2200
+
+## GFP transfer tables (A, not pooled with Curnow)
+- Daley n 579, joined 428
+- Hammon n 313, joined 313
+
+## TOPDB
+- n 9558, with sequence 9558, PDB xref 7579
 
 ## Stop
 - B: fit

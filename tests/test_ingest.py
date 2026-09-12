@@ -26,7 +26,36 @@ def test_purificationdb_flags_membrane_detergents():
     assert rows[0].question == "B-conditions"
 
 
-def test_census_stop_rule_on_tiny_bags(tmp_path: Path):
+def test_census_parquet_mixed_conc(tmp_path: Path):
+    from mpatlas.ingest import gpcrdb
+
+    path = tmp_path / "gpcrdb.csv"
+    path.write_text(
+        "Receptor entry_name (uniprot),PDB,solvent type (detergent/additive),"
+        "Solvent name,concentration,conc unit\n"
+        "5ht1b_human,4IAQ,DDM,detergent,1,%w/v\n"
+        "5ht1b_human,4IAQ,CHS,additive,0.2,%w/v\n"
+    )
+    tt = targettrack.load(FIXTURES / "targettrack_tiny.xml", tm_only=True)
+    run_census(
+        {
+            "curnow": [],
+            "curnow_unlabelled": [],
+            "gfp": [],
+            "uniprot": [],
+            "mpstruc": [],
+            "pdbtm": [],
+            "topdb": [],
+            "targettrack": tt,
+            "purificationdb": [],
+            "gpcrdb": gpcrdb.load(path),
+            "screens": [],
+        },
+        reports_dir=tmp_path,
+        processed_dir=tmp_path,
+        write_processed=True,
+    )
+    assert (tmp_path / "gpcrdb.parquet").exists()
     tt = targettrack.load(FIXTURES / "targettrack_tiny.xml", tm_only=True)
     pdb = purificationdb.load(FIXTURES / "purification_tiny.csv")
     result = run_census(

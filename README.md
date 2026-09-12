@@ -24,7 +24,7 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
 
 1. **Ingest** TargetTrack membrane-center trials, UniProt Swiss-Prot TM, mpstruc, the full Curnow library, GPCRdb construct Excel, Högbom/Kotov/Lin/Lantez catalogs, and PurificationDB / UniTmp when those dumps resolve
 2. **Gate 0 census** — n at every layer, stop rules for B / B-conditions / C, before any AUC
-3. **Features** — composition, Kyte–Doolittle TM belt, termini, loop charge, sequons (CPU, no embeddings)
+3. **Features** — composition, Kyte–Doolittle TM belt, termini, loop charge, sequons; ESM-2 650M mean-pool on the same leakage splits when `data/processed/esm2_650m.npz` exists
 4. **Models** — logreg + RF on A, on B (purified | cloned), and on C vs Swiss-Prot TM, under random vs leakage splits
 5. **Playbook** — given expression, recommend `standard` / `wrap_rescue` / `redesign` / `deprioritize`, then attach a DDM±CHS extract prior
 6. **WRAP amenability** — a rescue heuristic on B-failures, not a design engine
@@ -33,7 +33,7 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
   <img src="reports/figures/fig_leakage_auc.png" alt="ROC-AUC for questions A, B, and C under random vs leakage splits" width="720"/>
 </p>
 
-<p align="center"><em>Figure 1. Curnow FACS looks easy on a random split (RF 0.90). TargetTrack purification and “looks like a solved MP” are weaker even at random, and collapse further under center and organism holdout.</em></p>
+<p align="center"><em>Figure 1. Composition features: Curnow FACS looks easy on a random split (RF 0.90). TargetTrack purification and “looks like a solved MP” are weaker even at random, and collapse further under center and organism holdout. ESM on the same splits is Figure 5.</em></p>
 
 ---
 
@@ -49,7 +49,11 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
 | Centers with ≥1 purified | 11 (CSMP 1,099 · NYCOMPS 745 · others) |
 | Swiss-Prot TM background (C) | **80,943** |
 | mpstruc unique PDB IDs | **4,285** · 2,200 Swiss-Prot TM join positives |
-| PurificationDB / PDBTM / TOPDB / GFP cohorts | **n = 0** at ingest (dumps unreachable or not shipped) |
+| PurificationDB / PDBTM bulk | **n = 0** (dumps unreachable) |
+| TOPDB (local XML) | **9,558** entries, all with sequence · **7,579** PDB xref · median n_TM **3** |
+| Daley 2005 GFP (A transfer) | **579** · median GFP/ml split · **428** joined to Swiss-Prot TM E. coli |
+| Hammon 2009 GFP (A transfer) | **313** sequences (UniProt + NCBI) · **64** FSU ≥ 60,000 |
+| ESM-2 650M universe | **101,807** unique sequences (Swiss-Prot TM + Curnow + TOPDB + TargetTrack) |
 | GPCRdb construct recipes (B-conditions) | **1,289** rows · **442** solubilization · **268** unique PDBs |
 | GPCRdb solubilization detergents | DDM **155** · DM **69** · LMNG **20** · OG **11**; additive CHS **150** |
 | Mode extract combo | **DDM+CHS** on **122** PDBs |
@@ -58,17 +62,20 @@ If you put ~1000 membrane proteins into a cell, fluorescence is an early gate. W
 | Lin 2016 FA-SEC | **n = 2** (ASBTNM, HiTehA); **1%** DDM extract, **0.03%** DDM IMAC/SEC |
 | Lantez 2015 His-tag screen | **n = 31**; winners DDM, DM, DMNG, TX-100, LAPAO, Fos-12 (no public per-protein table) |
 | Gate 0 stop | A **fit_local** · B **fit** · B-conditions **prior** · C **fit** |
-| A random-split RF ROC-AUC | **0.904** |
-| A Hamming-cluster RF / logreg | **0.868** / **0.783** (cluster test n=85) |
-| B random-split RF | **0.667** |
-| B center-holdout RF (train NYCOMPS, test other centers) | **0.596** |
-| C random-split RF | **0.716** |
-| C organism-holdout RF (eukaryote test) | **0.552** |
+| A random-split RF ROC-AUC (compose) | **0.904** |
+| A Hamming-cluster RF / logreg (compose) | **0.868** / **0.783** (cluster test n=85) |
+| A Hamming-cluster logreg / RF (ESM-2 650M) | **0.883** / **0.835** |
+| B random-split RF (compose / ESM / both) | **0.667** / **0.744** / **0.753** |
+| B center-holdout RF (train NYCOMPS) | **0.596** compose · **0.670** ESM · **0.681** both |
+| C random-split RF (compose / ESM) | **0.716** / **0.785** |
+| C organism-holdout RF (eukaryote test) | **0.552** compose · **0.603** ESM |
+| Curnow → Daley GFP transfer (n=428) | RF compose **0.534** · best **0.570** (logreg, both) |
+| Curnow → Hammon GFP transfer | chance or worse (compose RF **0.441** on n=313) |
 | Playbook P(purified \| expressed) random RF | **0.658** |
 | Same, center holdout RF | **0.514** (chance after lab switch) |
 | Next-step mix on 800 expressed-not-purified | standard **193** · WRAP rescue **197** · redesign **272** · deprioritize **138** |
 
-Artifacts: [`reports/gate0.json`](reports/gate0.json), [`reports/curnow_leakage.csv`](reports/curnow_leakage.csv), [`reports/purified_leakage.csv`](reports/purified_leakage.csv), [`reports/structure_leakage.csv`](reports/structure_leakage.csv), [`reports/playbook_panel.csv`](reports/playbook_panel.csv), [`reports/gpcrdb_detergents.csv`](reports/gpcrdb_detergents.csv).
+Artifacts: [`reports/gate0.json`](reports/gate0.json), [`reports/curnow_leakage.csv`](reports/curnow_leakage.csv), [`reports/purified_leakage.csv`](reports/purified_leakage.csv), [`reports/structure_leakage.csv`](reports/structure_leakage.csv), [`reports/gfp_transfer.csv`](reports/gfp_transfer.csv), [`reports/playbook_panel.csv`](reports/playbook_panel.csv), [`reports/gpcrdb_detergents.csv`](reports/gpcrdb_detergents.csv).
 
 ---
 
@@ -116,6 +123,20 @@ Random split is the optimistic control. Primary claims use Hamming clusters on C
 <p align="center"><em>Figure 3. Local A: RF stays high on neighborhood holdout (0.90 → 0.87). Logistic regression drops more (0.89 → 0.78). The cluster test set is small (n=85).</em></p>
 
 Curnow is combinatorial variants of one designed scaffold. Scores applied to Swiss-Prot TM or TargetTrack are out of distribution and are not reported as A skill.
+
+---
+
+## ESM vs composition
+
+Mean-pooled ESM-2 650M (`facebook/esm2_t33_650M_UR50D`, 101,807 sequences) is concatenated or used alone on the **same** splits. A random-split bump that does not show up on center/organism holdout is not a better HTS prior.
+
+<p align="center">
+  <img src="reports/figures/fig_embed_auc.png" alt="RF ROC-AUC for compose vs ESM vs both on leakage splits" width="720"/>
+</p>
+
+<p align="center"><em>Figure 5. ESM lifts B center-holdout RF (0.60 → 0.67) and C organism-holdout RF (0.55 → 0.60). On Curnow, cluster RF does not improve (0.87 → 0.84); cluster logreg does (0.78 → 0.88). Random-split logreg on A jumps to 0.95 and is not the claim.</em></p>
+
+Curnow trained on FACS does not predict Daley GFP/ml (n=428, best AUC 0.57) or Hammon FSU (n=313, compose RF 0.44). That transfer is reported as transfer, not as A skill on natural proteins. Hammon ESM rows use 300/313 sequences present in the embedding index.
 
 ---
 
@@ -190,19 +211,19 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
 ## Limitations
 
 - **No FSEC traces.** B is TargetTrack `purified` among cloned membrane-center targets.
-- **Curnow is one scaffold.** Local A does not transfer by assertion; GFP-paper cohorts were not available as tables (n=0).
-- **UniTmp PDBTM/TOPDB XML did not download** (host 404 / DNS). C positives are mpstruc PDB IDs joined to Swiss-Prot `xref_pdb`.
+- **Curnow is one scaffold.** Local A does not transfer: Daley n=428 best ROC-AUC **0.57**; Hammon compose RF **0.44**. Those are not A skill.
+- **PDBTM bulk XML still 404.** TOPDB is in from a local dump (9,558). C positives remain mpstruc PDB IDs joined to Swiss-Prot `xref_pdb`.
 - **PurificationDB dump was unreachable.** Buffer NER from that source is still n=0.
 - **Center split shifts the base rate** (NYCOMPS train pos-rate 0.31 vs other-center test 0.69). That shift is part of the leakage result. Playbook center-holdout AUC **0.51**.
 - **Detergent rows are success-biased and small outside GPCRdb.** GPCRdb is GPCRs only (268 PDBs). Högbom is 60 non-random E. coli GFP fusions; Table 2 grades were not released as a matrix. Kotov is 9 IMPs diluted from DDM into 94 detergents (residual DDM remains). Lin is n=2. Lantez is a winner list for 31 proteins, not per-target outcomes. Fos-12 is a Lantez solubilization winner and a Kotov unfolding detergent.
-- CPU composition + Kyte–Doolittle features only. No language-model embeddings in v1.
+- ESM-2 650M is on disk (`data/processed/esm2_650m.npz`). It moves B center-holdout RF **0.60 → 0.67** and C organism-holdout RF **0.55 → 0.60**. It does not fix Curnow cluster RF or GFP transfer. 13 Hammon sequences are missing from the index.
 
 ---
 
 ## Future directions
 
-- Parse GFP-paper supplements (Daley, Hammon, Newstead/Drew) as A-transfer tests when sequences are available
-- Ingest PDBTM/TOPDB when UniTmp bulk files resolve; recompute C without the Swiss-Prot PDB join
+- Newstead/Drew GFP as another A-transfer table if a machine-readable supplement exists
+- PDBTM bulk XML if UniTmp resolves; recompute C without the Swiss-Prot PDB join
 - PurificationDB TM slice + detergent capture rate if a dump becomes public
 - Optional: PDB ligand CCDs (LMT/BOG) as *structure* detergent, not purification detergent
 - Time split on PDB deposition year for C
@@ -218,7 +239,7 @@ Baker WRAPs solubilize a TM target in the E. coli cytoplasm without detergent. v
 | Tests | `pytest -q` | — |
 | Download | `mpx-download` (`--skip-targettrack` optional) | `data/raw/` (gitignored except `curnow_labelled.csv`) |
 | Census | `mpx-census` | `reports/gate0.md`, `data/processed/*.parquet` |
-| Models + figures | `mpx-express` | `reports/*_leakage.csv`, `reports/figures/` |
+| Models + figures | `mpx-express` | `reports/*_leakage.csv`, `reports/gfp_transfer.csv`, `reports/figures/` (compose + ESM if `esm2_650m.npz` exists) |
 | Playbook | `mpx-playbook` | `reports/playbook_panel.csv`, `fig_playbook_*.png`, detergent prior columns |
 
 TargetTrack is Zenodo [821654](https://zenodo.org/records/821654) (`proteinTrialSeqs.fasta.gz` inside the tarball). Swiss-Prot TM is the UniProt stream `reviewed:true AND ft_transmem:*`. mpstruc XML is from [blanco.biomol.uci.edu/mpstruc](https://blanco.biomol.uci.edu/mpstruc/listAll/mpstrucTblXml). GPCRdb construct Excel is [protwis/gpcrdb_data](https://github.com/protwis/gpcrdb_data) `construct_annotations.xlsx`. Screen catalogs live under `data/fixtures/`.
@@ -234,7 +255,7 @@ tests/               XML/FASTA smoke, topology, split disjointness
 demo/                offline path
 reports/             Gate 0 + committed metrics and figures
 data/raw/            catalogs (gitignored; keep curnow_labelled.csv)
-data/fixtures/       Högbom/Kotov/Lin/Lantez tables
+data/fixtures/       Högbom/Kotov/Lin/Lantez, Daley, Hammon tables
 ```
 
 ---
