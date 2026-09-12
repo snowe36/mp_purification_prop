@@ -222,6 +222,11 @@ def run_census(
     reports_dir.mkdir(parents=True, exist_ok=True)
     (reports_dir / "gate0.json").write_text(json.dumps(result, indent=2, default=str))
     (reports_dir / "gate0.md").write_text(_markdown(result))
+    dets = gpcr_sum.get("detergents") or {}
+    if dets:
+        pd.DataFrame({"detergent": list(dets), "n": list(dets.values())}).to_csv(
+            reports_dir / "gpcrdb_detergents.csv", index=False
+        )
     if write_processed:
         processed_dir.mkdir(parents=True, exist_ok=True)
         frames = {k: records_to_df(v) for k, v in bags.items() if v}

@@ -105,6 +105,8 @@ def main() -> None:
         "topdb": [],
         "targettrack": [],
         "purificationdb": [],
+        "gpcrdb": [],
+        "screens": [],
     }
     census = run_census(bags, reports_dir=DEMO_OUT, processed_dir=DEMO_OUT, write_processed=False)
     (DEMO_OUT / "gate0.json").write_text(json.dumps(census, indent=2, default=str))

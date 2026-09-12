@@ -40,6 +40,8 @@ def test_census_stop_rule_on_tiny_bags(tmp_path: Path):
             "topdb": [],
             "targettrack": tt,
             "purificationdb": pdb,
+            "gpcrdb": [],
+            "screens": [],
         },
         reports_dir=tmp_path,
         processed_dir=tmp_path,

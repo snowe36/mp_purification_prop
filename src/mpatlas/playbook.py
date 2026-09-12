@@ -13,6 +13,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
+from mpatlas.detergents import prior_for
 from mpatlas.features import FEATURE_NAMES, FeatureRow, featurize_seq, matrix
 from mpatlas.wrap import WrapScore, wrap_score
 
@@ -115,10 +116,15 @@ def advise_table(
     sequences: list[str],
     names: list[str],
     source: str = "",
+    organisms: list[str | None] | None = None,
 ) -> pd.DataFrame:
     rows = []
-    for seq, name in zip(sequences, names, strict=True):
-        adv = advise_one(pipe, seq)
+    orgs = organisms or [None] * len(sequences)
+    for seq, name, org in zip(sequences, names, orgs, strict=True):
+        feat = featurize_seq(seq)
+        p = float(pipe.predict_proba(matrix([seq]))[0, 1])
+        adv = decide(p, wrap_score(seq, feat=feat), feat)
+        recipe = prior_for(feat, organism=org)
         rows.append(
             {
                 "accession": name,
@@ -129,6 +135,11 @@ def advise_table(
                 "wrap_amenable": int(adv.wrap_amenable),
                 "levers": "; ".join(adv.levers),
                 "why": adv.why,
+                "detergent_extract": recipe.extract,
+                "detergent_polish": recipe.polish,
+                "detergent_rescue": recipe.rescue,
+                "detergent_avoid": recipe.avoid,
+                "detergent_why": recipe.why,
             }
         )
     return pd.DataFrame(rows)

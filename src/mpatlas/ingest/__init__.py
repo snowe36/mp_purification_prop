@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from mpatlas.ingest import curnow, gpcrdb, mpstruc, purificationdb, screens, targettrack, uniprot, unitmp
+from mpatlas.ingest import curnow, gpcrdb, mpstruc, purificationdb, targettrack, uniprot, unitmp
 from mpatlas.paths import ensure_dirs
 
 

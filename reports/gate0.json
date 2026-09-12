@@ -81,6 +81,26 @@
       "questions": {},
       "n_label_pos": 0,
       "n_label_neg": 0
+    },
+    {
+      "source": "gpcrdb",
+      "n": 1283,
+      "n_with_sequence": 0,
+      "questions": {
+        "B-conditions": 1283
+      },
+      "n_label_pos": 0,
+      "n_label_neg": 0
+    },
+    {
+      "source": "screens",
+      "n": 206,
+      "n_with_sequence": 0,
+      "questions": {
+        "B-conditions": 206
+      },
+      "n_label_pos": 0,
+      "n_label_neg": 0
     }
   ],
   "targettrack": {
@@ -133,8 +153,88 @@
   },
   "stop": {
     "B": "fit",
-    "B-conditions": "lookup_only",
+    "B-conditions": "prior",
     "C": "fit",
     "A": "fit_local"
+  },
+  "gpcrdb": {
+    "n_rows": 1283,
+    "n_solubilization": 442,
+    "n_pdb": 268,
+    "detergents": {
+      "DDM": 155,
+      "DM": 69,
+      "LMNG": 20,
+      "OG": 6,
+      "HTG(heptylthioglucoside)": 4,
+      "sodium cholate": 3,
+      "nonyl-glucoside": 3,
+      "NG/HPTO": 2,
+      "OG( n-octyl-b-D-glucopyranoside)": 2,
+      "OG (n-octyl-\u03b2-D-glucopyranoside)": 2,
+      "digitonin": 1,
+      "OG (b-D-octylglucopyranoside)": 1,
+      "NG(nonyl-glucoside detergent )": 1,
+      "NG or n-octyl-\u03b2-D-glucopyranoside (OG)": 1,
+      "NG": 1,
+      "LDAO": 1
+    },
+    "additives": {
+      "CHS": 150,
+      "CHAPS": 6,
+      "sodium cholate": 4,
+      "Zn2+": 3,
+      "NaCl": 2,
+      "Na-cholate": 1,
+      "Glycerol": 1,
+      "HPTO(heptylthioglucoside)": 1
+    },
+    "extract_combos": {
+      "DDM+CHS": 122,
+      "DM": 63,
+      "DDM": 29,
+      "LMNG+CHS": 19,
+      "OG": 6,
+      "DM+CHS": 5,
+      "HTG(heptylthioglucoside)": 4,
+      "DDM+sodium cholate+CHS": 3,
+      "nonyl-glucoside": 3,
+      "NG/HPTO": 2,
+      "OG( n-octyl-b-D-glucopyranoside)": 2,
+      "OG (n-octyl-\u03b2-D-glucopyranoside)": 2
+    },
+    "chromatography": {
+      "immobilized metal affinity chromatography (IMAC) done": 80,
+      "Ni-NTA chromatography": 46,
+      "TALON IMAC Superflow  (Ni-Sepharose resin)": 19,
+      "size exclusion chromatography": 17,
+      "Size exclusion chromatography": 16,
+      "immunoaffinity chromatography(ConA) on 1D4-Sepharose 4B": 8,
+      "size-exclusion chromatography (SEC)": 6,
+      "anti-Flag M1 affinity chromatography": 5
+    },
+    "claim_B_conditions_prior": true
+  },
+  "screens": {
+    "hogbom2017": {
+      "targets": 60,
+      "detergents": 16,
+      "findings": 7
+    },
+    "kotov2019": {
+      "targets": 9,
+      "detergents": 94,
+      "findings": 6
+    },
+    "lantez2015": {
+      "targets": 0,
+      "detergents": 0,
+      "findings": 6
+    },
+    "lin2016": {
+      "targets": 0,
+      "detergents": 0,
+      "findings": 8
+    }
   }
 }

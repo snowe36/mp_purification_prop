@@ -26,7 +26,7 @@ Crude FSEC / FSEC-TS is what a new 1000-plex campaign would measure. We do not i
 
 ### B-conditions — how it was purified, given that it was
 
-Chromatography buffer recipes (pH, salt, buffer, detergent, additives) from PurificationDB. Every row is a crystallization-prep success. There are no failures. This table cannot train “will it purify.” It may inform a starting buffer or detergent-vs-WRAP prior **after** joining to a transmembrane catalog.
+Chromatography buffer recipes from PurificationDB (when a dump exists) plus GPCRdb construct annotations (solubilization detergent, chromatography, crystallization chemicals) and four published detergent screens (Lantez 2015, Lin 2016, Högbom/Sjöstrand 2017, Kotov 2019). Every GPCRdb row is a solved-GPCR success. The screens are small-n and/or success-biased. **None of these tables train “will it purify.”** They are a starting-recipe prior after the playbook has already chosen `standard` vs WRAP vs redesign. Högbom Table 2 per-protein FSEC grades are figures, not a public matrix — we keep the 60-protein list, the 16-detergent list, and the family-level claims from the text.
 
 ### C — historically solved
 
@@ -135,7 +135,7 @@ Before fitting:
 
 1. Print n per source and question.
 2. For B: n of TM-filtered TargetTrack targets that reached `cloned` and n that reached `purified`. If purified positives <100 **or** they come from a single center, **do not claim a B model.** Report the census and stop that arm.
-3. For B-conditions: n of PurificationDB UniProts that join to Swiss-Prot TM or PDBTM, and n whose buffer lists a membrane detergent (DDM, DM, OG, LDAO, LMNG, GDN, FC12, CHAPS, tritons, cholate). If the TM slice is <50, keep PurificationDB as a lookup table, not a model.
+3. For B-conditions: n of PurificationDB UniProts that join to Swiss-Prot TM or PDBTM, and n whose buffer lists a membrane detergent (DDM, DM, OG, LDAO, LMNG, GDN, FC12, CHAPS, tritons, cholate). If the TM slice is <50, keep PurificationDB as a lookup table, not a model. GPCRdb unique PDBs and literature screens are a **recipe prior** when n_PDB ≥ 50; they still do not authorize a purify-vs-fail classifier.
 4. For A: Curnow labelled n is already known to be ~2e3 on one scaffold — sufficient for a local A model, insufficient for transfer. Transfer tests are reported as transfer, not as A skill.
 5. For C: require ≥500 mpstruc/PDBTM unique proteins and ≥2,000 Swiss-Prot TM background proteins.
 
@@ -148,6 +148,7 @@ Before fitting:
 - P(purified | cloned) on TargetTrack TM is “this center’s pipeline recovered protein,” not “FSEC-monodisperse” and not “functionally folded.”
 - C vs Swiss-Prot TM is “resembles proteins that have been solved,” not “will express in my host.”
 - The playbook (B-action) recommends a next experiment class: `standard` vs `wrap_rescue` vs `redesign` vs `deprioritize`. It is not a buffer recipe and not a guarantee of purified protein.
+- The detergent prior attached to a playbook row is a starting extract/SEC recipe (DDM ± CHS; LMNG-class rescue; avoid fos-choline/PEG as stability detergents). GPCRdb recipes are GPCRs. Högbom/Kotov/Lin/Lantez are small published screens, not a 1000-protein FSEC table.
 
 ---
 
@@ -155,3 +156,4 @@ Before fitting:
 
 - 2026-09-11 Gate 0: UniTmp PDBTM/TOPDB bulk XML and PurificationDB dumps were unreachable at ingest time. Question C uses mpstruc (4,285 unique PDB IDs) joined to Swiss-Prot TM. B-conditions stays lookup-only (n=0). GFP-paper supplements were not present as machine-readable tables.
 - 2026-09-11 B-action playbook: `mpx-playbook` trains P(purified | expressed) on TargetTrack membrane centers and layers WRAP amenability plus construct levers. Allowed outputs are the four action tokens above. Forbidden: claiming detergent conditions, designed WRAPs, or FSEC success.
+- 2026-09-11 B-conditions recipes: PurificationDB remains n=0. GPCRdb construct Excel (solubilization / purification / xtal chemicals) is ingested as a GPCR success-only recipe table. Literature screens added as committed catalogs: Lantez 2015 (n=31, winner list only), Lin 2016 (n=2, 1% / 0.03% DDM), Högbom 2017 (60 E. coli GFP MPs × 16 detergents, family-level claims), Kotov 2019 (9 IMPs × 94-detergent nanoDSF). Playbook may attach a detergent **prior**; it still must not train will-it-purify on these rows. Fos-12 is a Lantez solubilization winner and a Kotov unfolding detergent — those claims are kept separate.

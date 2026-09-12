@@ -172,3 +172,16 @@ def playbook_scatter(df: pd.DataFrame, dest: Path | None = None) -> Path:
     ax.legend(frameon=False, fontsize=8)
     ax.set_title("High purify score → standard path; else WRAP or redesign")
     return _save(fig, "fig_playbook_scatter.png", dest)
+
+
+def detergents_bar(counts: dict[str, int], dest: Path | None = None, title: str | None = None) -> Path:
+    items = [(k, v) for k, v in counts.items() if k and k != "None"][:12]
+    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    if not items:
+        ax.set_title(title or "GPCRdb solubilization detergents")
+        return _save(fig, "fig_detergents.png", dest)
+    names, vals = zip(*items, strict=True)
+    ax.barh(list(names)[::-1], list(vals)[::-1], color=SERIES[0], edgecolor=TEXT, linewidth=0.4)
+    ax.set_xlabel("GPCRdb solubilization rows")
+    ax.set_title(title or "Starting detergent is DDM, not a purify-vs-fail score")
+    return _save(fig, "fig_detergents.png", dest)

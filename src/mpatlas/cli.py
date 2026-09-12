@@ -27,6 +27,11 @@ def download_main() -> None:
 def census_main() -> None:
     result = run_census()
     print(result["stop"])
+    gpcr = result.get("gpcrdb") or {}
+    dets = gpcr.get("detergents") or {}
+    if dets:
+        figmod.detergents_bar(dets, FIGURES)
+        print("GPCRdb PDBs", gpcr.get("n_pdb"), "top detergents", list(dets.items())[:6])
     print("wrote reports/gate0.md")
 
 
@@ -196,6 +201,12 @@ def playbook_main() -> None:
     panel.to_csv(PROCESSED / "playbook_panel.csv", index=False)
     figmod.playbook_actions(panel, FIGURES)
     figmod.playbook_scatter(panel[panel["source"] == "tt_expressed_not_purified"], FIGURES)
+    gate_path = REPORTS / "gate0.json"
+    if gate_path.exists():
+        gpcr = json.loads(gate_path.read_text()).get("gpcrdb") or {}
+        dets = gpcr.get("detergents") or {}
+        if dets:
+            figmod.detergents_bar(dets, FIGURES)
 
     print(panel.groupby(["source", "action"]).size().to_string())
     print("top wrap_rescue (B-failures)")
