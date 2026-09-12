@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from mpatlas.census import run_census
-from mpatlas.ingest import purificationdb, targettrack
+from mpatlas.ingest import gpcrdb, purificationdb, targettrack, unitmp
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

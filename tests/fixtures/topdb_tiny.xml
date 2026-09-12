@@ -1,0 +1,16 @@
+<TOPDBs>
+<TOPDB ID="TEST_HUMAN" type="Alpha_Polytopic">
+  <Sequence Len="40"><Seq>MIFLFVLLAIVVLITGLLMLNTSNSPYIRLIAFILLVITG</Seq></Sequence>
+  <Topology>
+    <Numtm Count="2"/>
+    <Regions>
+      <Region Begin="1" End="10" Loc="Outside"/>
+      <Region Begin="11" End="30" Loc="Membrane"/>
+      <Region Begin="31" End="40" Loc="Inside"/>
+    </Regions>
+  </Topology>
+  <CrossRef>
+    <PDB ID="1abc"/>
+  </CrossRef>
+</TOPDB>
+</TOPDBs>
